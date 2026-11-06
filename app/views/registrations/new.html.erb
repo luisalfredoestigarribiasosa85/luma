@@ -4,16 +4,16 @@
   <div class="mb-8">
     <div class="hazard h-1.5 w-24"></div>
     <h1 class="font-display mt-5 text-2xl font-black tracking-wide text-ink">Crear tu cuenta</h1>
-    <p class="mt-1 text-sm text-muted">Cada cuenta corresponde a una ferretería</p>
+    <p class="mt-1 text-sm text-muted">Cada cuenta corresponde a una tienda</p>
   </div>
 
   <div class="card p-7">
-    <%= form_with url: signup_path, method: :post, local: true, class: "space-y-5" do |form| %>
+    <%= form_with scope: :registration, url: signup_path, method: :post, local: true, class: "space-y-5" do |form| %>
       <%= render "shared/form_errors", object: @user %>
 
       <div>
-        <%= form.label :account_name, "Nombre de la ferretería", class: label_classes %>
-        <%= form.text_field :account_name, autofocus: true, required: true, class: field_classes, placeholder: "Ferretería Ejemplo" %>
+        <%= form.label :account_name, "Nombre de la tienda", class: label_classes %>
+        <%= form.text_field :account_name, autofocus: true, required: true, class: field_classes, placeholder: "Tienda Ejemplo" %>
       </div>
 
       <div>
