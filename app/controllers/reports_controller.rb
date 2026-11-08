@@ -17,6 +17,35 @@ class ReportsController < ApplicationController
     @discount_total = @sales.sum(:discount).to_d
     @sale_count = @sales.count
     @customer_count = @sales.where.not(customer_id: nil).distinct.count(:customer_id)
+
+    @day_expenses = current_account.expenses.where(spent_on: @date).includes(:user).order(created_at: :desc)
+    @cash_expenses = @day_expenses.where(payment_method: Expense.payment_methods[:cash]).sum(:amount).to_d
+    @cash_income = @by_payment["cash"].to_d
+    @cash_expected = @cash_income - @cash_expenses
+  end
+
+  def profit
+    range = report_range
+    @from = range.begin.to_date
+    @to = range.end.to_date
+
+    completed = current_account.sales.completed.where(created_at: range)
+    @sale_count = completed.count
+    @revenue = completed.sum(:total).to_d
+    @cogs = completed.joins(:items).sum("sale_items.quantity * sale_items.unit_cost").to_d
+    @gross = @revenue - @cogs
+    @gross_margin = @revenue.positive? ? (@gross / @revenue * 100) : 0
+
+    @expenses = current_account.expenses.where(spent_on: @from..@to)
+    @expenses_total = @expenses.sum(:amount).to_d
+    @expenses_by_category = @expenses.group(:category).sum(:amount)
+                                     .map { |key, amount| [ Expense::CATEGORIES[key.to_i] || key, amount ] }
+                                     .sort_by { |_, amount| -amount }
+
+    @purchases_total = current_account.purchases.where(created_at: range).sum(:total).to_d
+
+    @net = @gross - @expenses_total
+    @net_margin = @revenue.positive? ? (@net / @revenue * 100) : 0
   end
 
   def sales_report

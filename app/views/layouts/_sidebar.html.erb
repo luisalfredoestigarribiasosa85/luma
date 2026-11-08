@@ -15,10 +15,12 @@
     <%= sidebar_link "Clientes", customers_path, icon: "customers" %>
     <%= sidebar_link "Proveedores", suppliers_path, icon: "suppliers" %>
     <%= sidebar_link "Compras", purchases_path, icon: "cart" %>
+    <%= sidebar_link "Gastos", expenses_path, icon: "expenses" %>
     <%= sidebar_link "Cuentas por cobrar", payments_path, icon: "balances" %>
     <%= sidebar_link "Movimientos", stock_movements_path, icon: "movements" %>
     <%= sidebar_link "Caja diaria", daily_cash_reports_path, icon: "reports" %>
     <%= sidebar_link "Reporte de ventas", sales_report_reports_path, icon: "reports" %>
+    <%= sidebar_link "Reporte de ganancias", profit_reports_path, icon: "reports" %>
     <% if current_user.owner? %>
       <%= sidebar_link "Empleados", employees_path, icon: "employees" %>
       <%= sidebar_link "Configuración", edit_settings_path, icon: "settings" %>

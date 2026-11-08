@@ -8,6 +8,7 @@ class Account < ApplicationRecord
   has_many :purchases, dependent: :destroy
   has_many :payments, dependent: :destroy
   has_many :stock_movements, dependent: :destroy
+  has_many :expenses, dependent: :destroy
 
   MAXIMUM_SALE_NUMBER = 99_999_999
 

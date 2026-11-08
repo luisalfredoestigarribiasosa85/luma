@@ -53,6 +53,45 @@
   </div>
 
   <div class="<%= card_classes %> overflow-hidden">
+    <div class="flex items-center justify-between border-b border-line px-5 py-4">
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Gastos del día</h3>
+      <%= link_to "Nuevo gasto", new_expense_path, class: "text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
+    </div>
+    <% if @day_expenses.any? %>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+            <tr>
+              <th class="px-5 py-3">Concepto</th>
+              <th class="px-5 py-3">Categoría</th>
+              <th class="px-5 py-3">Método</th>
+              <th class="px-5 py-3 text-right">Monto</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line">
+            <% @day_expenses.each do |expense| %>
+              <tr class="transition hover:bg-raise/50">
+                <td class="px-5 py-3 font-medium text-ivory"><%= expense.description %></td>
+                <td class="px-5 py-3 text-muted"><%= expense.category_label %></td>
+                <td class="px-5 py-3 capitalize text-ivory-soft"><%= expense.payment_method %></td>
+                <td class="num px-5 py-3 text-right font-semibold text-alert">− <%= money(expense.amount) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <dl class="border-t border-line bg-raise/50 px-5 py-4 text-sm font-mono">
+        <div class="flex justify-between"><dt class="text-muted">Ingresos en efectivo</dt><dd class="text-ok"><%= money(@cash_income) %></dd></div>
+        <div class="flex justify-between"><dt class="text-muted">− Gastos en efectivo</dt><dd class="text-alert"><%= money(@cash_expenses) %></dd></div>
+        <div class="mt-2 flex justify-between border-t border-dashed border-line-dark pt-2 font-display text-base font-bold text-ivory"><dt>Caja esperada en efectivo</dt><dd class="text-gold"><%= money(@cash_expected) %></dd></div>
+      </dl>
+      <p class="border-t border-line px-5 py-3 text-[11px] text-faint">Solo los gastos pagados en efectivo descuentan la caja. Los demás quedan registrados para el <%= link_to "reporte de ganancias", profit_reports_path, class: "text-gold hover:text-gold-bright" %>.</p>
+    <% else %>
+      <%= render "shared/empty_state", message: "No hay gastos en esta fecha" %>
+    <% end %>
+  </div>
+
+  <div class="<%= card_classes %> overflow-hidden">
     <div class="border-b border-line px-5 py-4">
       <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Ventas del día</h3>
     </div>

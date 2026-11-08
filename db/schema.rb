@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_06_170000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_08_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -45,6 +45,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_06_170000) do
     t.datetime "updated_at", null: false
     t.index ["account_id", "document_number"], name: "index_customers_on_account_id_and_document_number", unique: true
     t.index ["account_id"], name: "index_customers_on_account_id"
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.decimal "amount", precision: 12, scale: 2, default: "0.0", null: false
+    t.integer "category", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.string "description", null: false
+    t.text "note"
+    t.integer "payment_method", default: 0, null: false
+    t.date "spent_on", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["account_id", "spent_on"], name: "index_expenses_on_account_id_and_spent_on"
+    t.index ["account_id"], name: "index_expenses_on_account_id"
+    t.index ["user_id"], name: "index_expenses_on_user_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -194,6 +210,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_06_170000) do
 
   add_foreign_key "categories", "accounts"
   add_foreign_key "customers", "accounts"
+  add_foreign_key "expenses", "accounts"
+  add_foreign_key "expenses", "users"
   add_foreign_key "payments", "accounts"
   add_foreign_key "payments", "customers"
   add_foreign_key "payments", "sales"

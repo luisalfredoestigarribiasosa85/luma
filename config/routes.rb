@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :customers
   resources :suppliers
   resources :purchases
+  resources :expenses, except: %i[ show ]
   resources :imports, only: %i[new create] do
     collection do
       get :template
@@ -31,6 +32,7 @@ Rails.application.routes.draw do
     collection do
       get :daily_cash
       get :sales_report
+      get :profit
     end
   end
   resources :dashboard, only: :index

@@ -1,0 +1,8 @@
+<% content_for(:page_title) { "Nuevo gasto" } %>
+
+<%= render "shared/page_header", title: "Nuevo gasto",
+  subtitle: "Gastos operativos y de reposición de la tienda" %>
+
+<div class="max-w-2xl">
+  <%= render "expenses/form" %>
+</div>

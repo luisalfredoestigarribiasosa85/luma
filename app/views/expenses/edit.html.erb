@@ -1,0 +1,8 @@
+<% content_for(:page_title) { "Editar gasto" } %>
+
+<%= render "shared/page_header", title: "Editar gasto",
+  subtitle: @expense.description %>
+
+<div class="max-w-2xl">
+  <%= render "expenses/form" %>
+</div>

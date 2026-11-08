@@ -1,0 +1,89 @@
+<% content_for(:page_title) { "Gastos" } %>
+
+<%= render "shared/page_header", title: "Gastos",
+  subtitle: "Gastos operativos y de reposición de mercadería",
+  action: link_to("Nuevo gasto", new_expense_path, class: button_classes) %>
+
+<div class="mb-4">
+  <%= form_with url: expenses_path, method: :get, class: "flex flex-wrap items-end gap-3" do |form| %>
+    <div>
+      <%= form.label :from, "Desde", class: label_classes %>
+      <%= form.date_field :from, value: @from, class: field_classes %>
+    </div>
+    <div>
+      <%= form.label :to, "Hasta", class: label_classes %>
+      <%= form.date_field :to, value: @to, class: field_classes %>
+    </div>
+    <div>
+      <%= form.label :category, "Categoría", class: label_classes %>
+      <%= form.select :category, Expense.category_options, { include_blank: "Todas", selected: @category }, class: field_classes %>
+    </div>
+    <%= form.submit "Filtrar", class: "#{button_classes(:secondary)} cursor-pointer" %>
+  <% end %>
+</div>
+
+<div class="mb-4 grid gap-4 sm:grid-cols-2">
+  <div class="<%= card_classes %> p-5">
+    <p class="eyebrow">Gastos en el período</p>
+    <p class="num font-display mt-2 text-2xl font-bold text-ivory"><%= @expenses.count %></p>
+  </div>
+  <div class="<%= card_classes %> p-5">
+    <p class="eyebrow">Total gastado</p>
+    <p class="num font-display mt-2 text-2xl font-bold text-alert"><%= money(@total) %></p>
+  </div>
+</div>
+
+<div class="<%= card_classes %> overflow-hidden">
+  <% if @expenses.any? %>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+          <tr>
+            <th class="px-5 py-3">Fecha</th>
+            <th class="px-5 py-3">Concepto</th>
+            <th class="px-5 py-3">Categoría</th>
+            <th class="px-5 py-3">Método</th>
+            <th class="px-5 py-3 text-right">Monto</th>
+            <th class="px-5 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          <% @expenses.each do |expense| %>
+            <tr class="transition hover:bg-raise/50">
+              <td class="num px-5 py-3 text-muted"><%= simple_date(expense.spent_on) %></td>
+              <td class="px-5 py-3">
+                <p class="font-medium text-ivory"><%= expense.description %></p>
+                <% if expense.note.present? %>
+                  <p class="text-xs text-faint"><%= expense.note %></p>
+                <% end %>
+              </td>
+              <td class="px-5 py-3 text-muted"><%= expense.category_label %></td>
+              <td class="px-5 py-3 capitalize text-ivory-soft">
+                <%= expense.payment_method %>
+                <% if expense.payment_method == "cash" %>
+                  <span class="badge badge-warn ml-1">Efectivo</span>
+                <% end %>
+              </td>
+              <td class="num px-5 py-3 text-right font-semibold text-ivory"><%= money(expense.amount) %></td>
+              <td class="px-5 py-3 text-right whitespace-nowrap">
+                <%= link_to "Editar", edit_expense_path(expense), class: "text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
+                <%= button_to "Eliminar", expense_path(expense), method: :delete,
+                    data: { turbo_confirm: "¿Eliminar el gasto \"#{expense.description}\"?" },
+                    class: "ml-3 inline text-xs font-semibold uppercase tracking-wider text-alert hover:text-alert-dark cursor-pointer" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr class="border-t-2 border-line bg-raise/50">
+            <td colspan="4" class="px-5 py-3 font-display text-sm font-bold uppercase tracking-wide text-ivory">Total</td>
+            <td class="num px-5 py-3 text-right font-display text-base font-bold text-alert"><%= money(@total) %></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  <% else %>
+    <%= render "shared/empty_state", message: "No hay gastos en el período" %>
+  <% end %>
+</div>

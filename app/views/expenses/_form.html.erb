@@ -1,0 +1,42 @@
+<div class="card p-6">
+  <%= render "shared/form_errors", object: @expense %>
+
+  <%= form_with model: @expense, class: "space-y-5" do |form| %>
+    <div>
+      <%= form.label :description, "Concepto", class: label_classes %>
+      <%= form.text_field :description, required: true, autofocus: true, placeholder: "Ej: flete del proveedor", class: field_classes %>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <%= form.label :category, "Categoría", class: label_classes %>
+        <%= form.select :category, Expense.category_options, {}, class: field_classes %>
+      </div>
+      <div>
+        <%= form.label :payment_method, "Forma de pago", class: label_classes %>
+        <%= form.select :payment_method, Expense.payment_methods.map { |k, _| [ k.titleize, k ] }, {}, class: field_classes %>
+      </div>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <%= form.label :amount, "Monto (Gs.)", class: label_classes %>
+        <%= form.number_field :amount, step: "0.01", min: 0, required: true, inputmode: "decimal", placeholder: "0", class: "#{field_classes} num" %>
+      </div>
+      <div>
+        <%= form.label :spent_on, "Fecha", class: label_classes %>
+        <%= form.date_field :spent_on, required: true, class: field_classes %>
+      </div>
+    </div>
+
+    <div>
+      <%= form.label :note, "Nota (opcional)", class: label_classes %>
+      <%= form.text_area :note, rows: 2, placeholder: "Detalle interno, referencia de comprobante…", class: field_classes %>
+    </div>
+
+    <div class="flex gap-3">
+      <%= form.submit (@expense.persisted? ? "Guardar cambios" : "Registrar gasto"), class: button_classes %>
+      <%= link_to "Volver", expenses_path, class: button_classes(:secondary) %>
+    </div>
+  <% end %>
+</div>
