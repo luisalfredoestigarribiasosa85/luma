@@ -18,8 +18,8 @@ module ApplicationHelper
 
   def sidebar_link(label, path, icon:)
     active = nav_item_active?(path)
-    classes = active ? "border-hazard bg-white/5 text-paper" : "border-transparent text-paper/55 hover:bg-white/5 hover:text-paper"
-    link_to path, class: "flex items-center gap-3 border-l-2 px-4 py-2 text-sm font-medium transition #{classes}" do
+    classes = active ? "border-gold bg-gold/[0.07] text-gold-bright" : "border-transparent text-muted hover:bg-ivory/[0.04] hover:text-ivory"
+    link_to path, class: "flex items-center gap-3 border-l-2 px-4 py-2 text-[13px] font-medium transition #{classes}" do
       concat sidebar_icon(icon)
       concat content_tag(:span, label)
     end

@@ -1,11 +1,12 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["lines", "template", "line", "product", "quantity", "unitPrice", "subtotal", "discount", "summaryCount", "summarySubtotal", "summaryTotal"]
+  static targets = ["lines", "template", "line", "product", "quantity", "unitPrice", "subtotal", "discount", "summaryCount", "summarySubtotal", "summaryTotal", "paymentMethod", "cashBlock", "cashReceived", "changeLabel", "change"]
 
   connect() {
     this.loadCatalog()
     this.nextLineIndex = this.countLines() + 1
+    this.toggleCash()
     this.recalculate()
   }
 
@@ -49,6 +50,12 @@ export default class extends Controller {
     this.recalculate()
   }
 
+  toggleCash() {
+    if (!this.hasCashBlockTarget || !this.hasPaymentMethodTarget) return
+    this.cashBlockTarget.classList.toggle("hidden", this.paymentMethodTarget.value !== "cash")
+    this.recalculate()
+  }
+
   recalculate() {
     let subtotal = 0
     let count = 0
@@ -70,6 +77,22 @@ export default class extends Controller {
     this.summaryCountTarget.textContent = count
     this.summarySubtotalTarget.textContent = this.format(subtotal)
     this.summaryTotalTarget.textContent = this.format(total)
+
+    if (this.hasCashBlockTarget && this.hasCashReceivedTarget) {
+      const received = parseFloat(this.cashReceivedTarget.value) || 0
+      const change = received - total
+      if (received === 0 || change >= 0) {
+        this.changeLabelTarget.textContent = "Vuelto"
+        this.changeTarget.textContent = this.format(Math.max(change, 0))
+        this.changeTarget.classList.remove("text-alert")
+        this.changeTarget.classList.add("text-gold")
+      } else {
+        this.changeLabelTarget.textContent = "Faltan"
+        this.changeTarget.textContent = this.format(-change)
+        this.changeTarget.classList.remove("text-gold")
+        this.changeTarget.classList.add("text-alert")
+      }
+    }
   }
 
   findProduct(id) {

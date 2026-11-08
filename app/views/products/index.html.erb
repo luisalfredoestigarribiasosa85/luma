@@ -5,7 +5,7 @@
 
 <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
   <div>
-    <%= link_to "Importar desde Excel", new_import_path, class: "text-sm font-semibold uppercase tracking-wider text-hazard hover:text-hazard-dark" %>
+    <%= link_to "Importar desde Excel", new_import_path, class: "text-sm font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
   </div>
   <div class="flex flex-1 gap-2 sm:justify-end">
     <%= form_with url: products_path, method: :get, class: "flex flex-1 gap-2 sm:max-w-2xl" do |form| %>
@@ -20,7 +20,7 @@
   <% if @products.any? %>
     <div class="overflow-x-auto">
       <table class="w-full text-sm">
-        <thead class="bg-paper/60 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+        <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
           <tr>
             <th class="px-5 py-3">Código</th>
             <th class="px-5 py-3">Producto</th>
@@ -32,15 +32,15 @@
         </thead>
         <tbody class="divide-y divide-line">
           <% @products.each do |product| %>
-            <tr class="transition hover:bg-paper/60">
+            <tr class="transition hover:bg-raise/50">
               <td class="num px-5 py-3 text-xs text-faint"><%= product.sku.presence || "—" %></td>
               <td class="px-5 py-3">
-                <%= link_to product.name, product, class: "font-medium text-ink hover:text-hazard" %>
+                <%= link_to product.name, product, class: "font-medium text-ivory hover:text-gold" %>
               </td>
               <td class="px-5 py-3 text-muted"><%= product.category&.name || "—" %></td>
               <td class="num px-5 py-3 text-right font-medium"><%= money(product.price) %></td>
               <td class="num px-5 py-3 text-right">
-                <span class="<%= product.low_stock? ? "font-bold text-alert" : "text-ink-soft" %>">
+                <span class="<%= product.low_stock? ? "font-bold text-alert" : "text-ivory-soft" %>">
                   <%= product.stock %> <%= product.unit %>
                 </span>
               </td>

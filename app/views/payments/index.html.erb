@@ -18,7 +18,7 @@
       <%= form.collection_select :customer_id, @customers, :id, :name, { include_blank: "Todos", selected: params[:customer_id] }, class: field_classes %>
     </div>
     <%= form.submit "Filtrar", class: "#{button_classes(:secondary)} cursor-pointer" %>
-    <%= link_to "Limpiar", payments_path, class: "text-xs font-semibold uppercase tracking-wider text-hazard hover:text-hazard-dark" %>
+    <%= link_to "Limpiar", payments_path, class: "text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
   <% end %>
 </div>
 
@@ -26,7 +26,7 @@
   <div class="mb-4 grid gap-4 sm:grid-cols-2">
     <div class="<%= card_classes %> p-5">
       <p class="eyebrow">Pagos registrados</p>
-      <p class="num font-display mt-1 text-2xl font-bold text-ink"><%= @payments.count %></p>
+      <p class="num font-display mt-1 text-2xl font-bold text-ivory"><%= @payments.count %></p>
     </div>
     <div class="<%= card_classes %> p-5">
       <p class="eyebrow">Total cobrado</p>
@@ -37,7 +37,7 @@
   <div class="<%= card_classes %> overflow-hidden">
     <div class="overflow-x-auto">
       <table class="w-full text-sm">
-        <thead class="bg-paper/60 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+        <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
           <tr>
             <th class="px-5 py-3">Fecha</th>
             <th class="px-5 py-3">Cliente</th>
@@ -49,11 +49,11 @@
         </thead>
         <tbody class="divide-y divide-line">
           <% @payments.each do |payment| %>
-            <tr class="transition hover:bg-paper/60">
+            <tr class="transition hover:bg-raise/50">
               <td class="num px-5 py-3 text-muted"><%= simple_date(payment.created_at) %></td>
-              <td class="px-5 py-3 font-medium text-ink"><%= payment.customer.name %></td>
-              <td class="px-5 py-3"><%= link_to "##{payment.sale.number}", sale_path(payment.sale), class: "num text-xs text-faint hover:text-hazard" %></td>
-              <td class="px-5 py-3 capitalize text-ink-soft"><%= payment.payment_method %></td>
+              <td class="px-5 py-3 font-medium text-ivory"><%= payment.customer.name %></td>
+              <td class="px-5 py-3"><%= link_to "##{payment.sale.number}", sale_path(payment.sale), class: "num text-xs text-faint hover:text-gold" %></td>
+              <td class="px-5 py-3 capitalize text-ivory-soft"><%= payment.payment_method %></td>
               <td class="num px-5 py-3 text-right font-semibold text-ok"><%= money(payment.amount) %></td>
               <td class="px-5 py-3 text-muted"><%= payment.user&.name || "—" %></td>
             </tr>

@@ -13,7 +13,7 @@
 <div class="<%= card_classes %> overflow-hidden">
   <% if @customers.any? %>
     <table class="w-full text-sm">
-      <thead class="bg-paper/60 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+      <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
         <tr>
           <th class="px-5 py-3">Nombre</th>
           <th class="px-5 py-3">Documento</th>
@@ -23,13 +23,13 @@
       </thead>
       <tbody class="divide-y divide-line">
         <% @customers.each do |customer| %>
-          <tr class="transition hover:bg-paper/60">
+          <tr class="transition hover:bg-raise/50">
             <td class="px-5 py-3">
-              <%= link_to customer.name, customer, class: "font-medium text-ink hover:text-hazard" %>
+              <%= link_to customer.name, customer, class: "font-medium text-ivory hover:text-gold" %>
             </td>
             <td class="num px-5 py-3 text-xs text-faint"><%= customer.document_number.presence || "—" %></td>
             <td class="px-5 py-3 text-muted"><%= customer.phone.presence || "—" %></td>
-            <td class="num px-5 py-3 text-right text-ink-soft"><%= customer.sales.count %></td>
+            <td class="num px-5 py-3 text-right text-ivory-soft"><%= customer.sales.count %></td>
           </tr>
         <% end %>
       </tbody>

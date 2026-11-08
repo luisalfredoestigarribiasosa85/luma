@@ -1,7 +1,7 @@
 <% content_for(:page_title) { "Nueva compra" } %>
 <% catalog = @products.map { |p| { id: p.id, name: p.name, price: p.cost_price, unit: p.unit, stock: p.stock } }.to_json %>
 
-<script type="application/json" id="sale-catalog" data-turbo-cache="false"><%= catalog %></script>
+<script type="application/json" id="sale-catalog" data-turbo-cache="false"><%= raw json_escape catalog %></script>
 
 <%= render "shared/form_errors", object: @purchase %>
 
@@ -29,7 +29,7 @@
       <% end %>
     </div>
 
-    <button type="button" data-action="sales#addLine" class="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-hazard hover:text-hazard-dark">
+    <button type="button" data-action="sales#addLine" class="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
       Agregar producto
     </button>
@@ -47,7 +47,7 @@
   </div>
 
   <div class="<%= card_classes %> overflow-hidden xl:col-span-1">
-    <div class="hazard h-1.5"></div>
+    <div class="ember h-1.5"></div>
     <div class="p-6">
       <p class="eyebrow">Resumen de la compra</p>
 
@@ -61,8 +61,8 @@
           <dd data-sales-target="summarySubtotal" class="num font-semibold">0</dd>
         </div>
         <div class="mt-4 flex items-end justify-between border-t border-dashed border-line-dark pt-4">
-          <dt class="font-display text-sm font-bold uppercase tracking-wider text-ink">Total</dt>
-          <dd data-sales-target="summaryTotal" class="num font-display text-2xl font-bold text-hazard">0</dd>
+          <dt class="font-display text-sm font-bold uppercase tracking-wider text-ivory">Total</dt>
+          <dd data-sales-target="summaryTotal" class="num font-display text-2xl font-bold text-gold">0</dd>
         </div>
       </dl>
 

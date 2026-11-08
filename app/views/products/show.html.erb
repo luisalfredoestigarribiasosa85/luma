@@ -6,12 +6,12 @@
 
 <div class="grid gap-6 md:grid-cols-2">
   <div class="<%= card_classes %> p-6">
-    <div class="hazard mb-4 h-1 w-10"></div>
-    <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Información</h3>
+    <div class="ember mb-4 h-1 w-10"></div>
+    <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Información</h3>
     <dl class="mt-4 space-y-3 text-sm">
-      <div class="flex justify-between"><dt class="text-muted">Descripción</dt><dd class="font-medium text-ink"><%= @product.description.presence || "—" %></dd></div>
-      <div class="flex justify-between"><dt class="text-muted">Costo</dt><dd class="num font-medium text-ink"><%= money(@product.cost_price) %></dd></div>
-      <div class="flex justify-between"><dt class="text-muted">Precio</dt><dd class="num font-semibold text-ink"><%= money(@product.price) %></dd></div>
+      <div class="flex justify-between"><dt class="text-muted">Descripción</dt><dd class="font-medium text-ivory"><%= @product.description.presence || "—" %></dd></div>
+      <div class="flex justify-between"><dt class="text-muted">Costo</dt><dd class="num font-medium text-ivory"><%= money(@product.cost_price) %></dd></div>
+      <div class="flex justify-between"><dt class="text-muted">Precio</dt><dd class="num font-semibold text-ivory"><%= money(@product.price) %></dd></div>
       <div class="flex justify-between border-t border-dashed border-line-dark pt-3">
         <dt class="text-muted">Ganancia por unidad</dt>
         <dd class="num font-semibold text-ok"><%= money(@product.price.to_d - @product.cost_price.to_d) %></dd>
@@ -22,7 +22,7 @@
           <%= @product.price.positive? ? number_to_percentage((( @product.price.to_d - @product.cost_price.to_d ) / @product.price.to_d * 100), precision: 1) : "—" %>
         </dd>
       </div>
-      <div class="flex justify-between"><dt class="text-muted">Unidad</dt><dd class="font-medium text-ink"><%= @product.unit %></dd></div>
+      <div class="flex justify-between"><dt class="text-muted">Unidad</dt><dd class="font-medium text-ivory"><%= @product.unit %></dd></div>
       <div class="flex justify-between">
         <dt class="text-muted">Estado</dt>
         <dd>
@@ -37,16 +37,16 @@
   </div>
 
   <div class="<%= card_classes %> p-6">
-    <div class="hazard mb-4 h-1 w-10"></div>
-    <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Stock</h3>
+    <div class="ember mb-4 h-1 w-10"></div>
+    <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Stock</h3>
     <dl class="mt-4 space-y-3 text-sm">
       <div class="flex justify-between">
         <dt class="text-muted">Disponible</dt>
-        <dd class="num <%= @product.low_stock? ? "font-bold text-alert" : "font-semibold text-ink" %>">
+        <dd class="num <%= @product.low_stock? ? "font-bold text-alert" : "font-semibold text-ivory" %>">
           <%= @product.stock %> <%= @product.unit %>
         </dd>
       </div>
-      <div class="flex justify-between"><dt class="text-muted">Stock mínimo</dt><dd class="num font-medium text-ink"><%= @product.min_stock %> <%= @product.unit %></dd></div>
+      <div class="flex justify-between"><dt class="text-muted">Stock mínimo</dt><dd class="num font-medium text-ivory"><%= @product.min_stock %> <%= @product.unit %></dd></div>
       <div class="flex justify-between">
         <dt class="text-muted">Estado</dt>
         <dd><span class="<%= @product.low_stock? ? "badge badge-warn" : "badge badge-ok" %>"><%= @product.low_stock? ? "Stock bajo" : "OK" %></span></dd>
@@ -59,7 +59,7 @@
     </div>
 
     <div class="mt-5 border-t border-line pt-5">
-      <h4 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Ajuste rápido de stock</h4>
+      <h4 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Ajuste rápido de stock</h4>
       <p class="mt-1 mb-3 text-xs text-muted">Ideal para conteo físico. Se registra un movimiento de ajuste.</p>
       <%= form_with model: @product, url: adjust_stock_product_path(@product), method: :patch, class: "flex flex-wrap items-end gap-3" do |form| %>
         <div class="flex-1">
@@ -79,14 +79,14 @@
 <div class="mt-6">
   <div class="<%= card_classes %> overflow-hidden">
     <div class="flex items-center justify-between border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Historial de movimientos</h3>
-      <%= link_to "Ver todos", stock_movements_path(product_id: @product.id), class: "text-xs font-semibold uppercase tracking-wider text-hazard hover:text-hazard-dark" %>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Historial de movimientos</h3>
+      <%= link_to "Ver todos", stock_movements_path(product_id: @product.id), class: "text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
     </div>
 
     <% if @movements.any? %>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
-          <thead class="bg-paper/60 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+          <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
             <tr>
               <th class="px-5 py-3">Fecha</th>
               <th class="px-5 py-3">Tipo</th>
@@ -97,13 +97,13 @@
           </thead>
           <tbody class="divide-y divide-line">
             <% @movements.each do |movement| %>
-              <tr class="transition hover:bg-paper/60">
+              <tr class="transition hover:bg-raise/50">
                 <td class="num px-5 py-3 text-muted"><%= simple_date(movement.created_at) %></td>
                 <td class="px-5 py-3">
                   <span class="<%= badge_color(movement.movement_type) %> capitalize"><%= movement.movement_type %></span>
                 </td>
                 <td class="num px-5 py-3 text-right font-semibold <%= movement.quantity.positive? ? "text-ok" : "text-alert" %>"><%= movement.signed_quantity %></td>
-                <td class="num px-5 py-3 text-right text-ink-soft"><%= movement.new_quantity %></td>
+                <td class="num px-5 py-3 text-right text-ivory-soft"><%= movement.new_quantity %></td>
                 <td class="px-5 py-3 text-muted"><%= movement.note.presence || "—" %></td>
               </tr>
             <% end %>

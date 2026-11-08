@@ -6,17 +6,17 @@
 
 <div class="<%= card_classes %> p-6">
   <dl class="grid gap-4 text-sm sm:grid-cols-2">
-    <div><dt class="text-muted">Documento</dt><dd class="num mt-0.5 font-medium text-ink"><%= @customer.document_number.presence || "—" %></dd></div>
-    <div><dt class="text-muted">Teléfono</dt><dd class="num mt-0.5 font-medium text-ink"><%= @customer.phone.presence || "—" %></dd></div>
-    <div><dt class="text-muted">Email</dt><dd class="mt-0.5 font-medium text-ink"><%= @customer.email.presence || "—" %></dd></div>
-    <div><dt class="text-muted">Dirección</dt><dd class="mt-0.5 font-medium text-ink"><%= @customer.address.presence || "—" %></dd></div>
+    <div><dt class="text-muted">Documento</dt><dd class="num mt-0.5 font-medium text-ivory"><%= @customer.document_number.presence || "—" %></dd></div>
+    <div><dt class="text-muted">Teléfono</dt><dd class="num mt-0.5 font-medium text-ivory"><%= @customer.phone.presence || "—" %></dd></div>
+    <div><dt class="text-muted">Email</dt><dd class="mt-0.5 font-medium text-ivory"><%= @customer.email.presence || "—" %></dd></div>
+    <div><dt class="text-muted">Dirección</dt><dd class="mt-0.5 font-medium text-ivory"><%= @customer.address.presence || "—" %></dd></div>
   </dl>
 </div>
 
 <div class="mt-6">
   <div class="<%= card_classes %>">
     <div class="flex items-center justify-between border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Cuenta corriente</h3>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Cuenta corriente</h3>
       <% if @customer.total_debt.positive? %>
         <span class="badge badge-alert"><%= money(@customer.total_debt) %></span>
       <% else %>
@@ -31,7 +31,7 @@
           <% @customer.open_credit_sales.each do |sale| %>
             <li class="flex items-center justify-between gap-4 py-2.5">
               <div>
-                <%= link_to sale_path(sale), class: "text-sm font-medium text-ink hover:text-hazard" do %>
+                <%= link_to sale_path(sale), class: "text-sm font-medium text-ivory hover:text-gold" do %>
                   Venta #<%= sale.number %> · <%= simple_date(sale.created_at) %>
                 <% end %>
                 <p class="num mt-0.5 text-xs text-muted">Total <%= money(sale.total) %> · Pagado <%= money(sale.total - sale.balance) %></p>
@@ -51,17 +51,17 @@
 <div class="mt-6">
   <div class="<%= card_classes %>">
     <div class="border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Historial de ventas</h3>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Historial de ventas</h3>
     </div>
     <div class="p-5">
       <% if @customer.sales.any? %>
         <ul class="divide-y divide-line">
           <% @customer.sales.order(created_at: :desc).each do |sale| %>
             <li class="flex items-center justify-between py-2.5">
-              <%= link_to sale_path(sale), class: "text-sm font-medium text-ink hover:text-hazard" do %>
+              <%= link_to sale_path(sale), class: "text-sm font-medium text-ivory hover:text-gold" do %>
                 Venta #<%= sale.number %> · <%= simple_date(sale.created_at) %>
               <% end %>
-              <span class="num font-semibold text-ink"><%= money(sale.total) %></span>
+              <span class="num font-semibold text-ivory"><%= money(sale.total) %></span>
             </li>
           <% end %>
         </ul>

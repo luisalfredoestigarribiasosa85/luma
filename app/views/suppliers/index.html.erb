@@ -13,7 +13,7 @@
 <div class="<%= card_classes %> overflow-hidden">
   <% if @suppliers.any? %>
     <table class="w-full text-sm">
-      <thead class="bg-paper/60 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+      <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
         <tr>
           <th class="px-5 py-3">Nombre</th>
           <th class="px-5 py-3">RUC</th>
@@ -24,13 +24,13 @@
       </thead>
       <tbody class="divide-y divide-line">
         <% @suppliers.each do |supplier| %>
-          <tr class="transition hover:bg-paper/60">
-            <td class="px-5 py-3 font-medium text-ink"><%= supplier.name %></td>
+          <tr class="transition hover:bg-raise/50">
+            <td class="px-5 py-3 font-medium text-ivory"><%= supplier.name %></td>
             <td class="num px-5 py-3 text-xs text-faint"><%= supplier.ruc.presence || "—" %></td>
             <td class="px-5 py-3 text-muted"><%= supplier.phone.presence || "—" %></td>
             <td class="px-5 py-3 text-muted"><%= supplier.email.presence || "—" %></td>
             <td class="whitespace-nowrap px-5 py-3 text-right">
-              <%= link_to "Editar", edit_supplier_path(supplier), class: "text-xs font-semibold uppercase tracking-wider text-hazard hover:text-hazard-dark" %>
+              <%= link_to "Editar", edit_supplier_path(supplier), class: "text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
               <%= button_to "Eliminar", supplier, method: :delete,
                   data: { turbo_confirm: "¿Eliminar a #{supplier.name}?" },
                   class: "ml-3 inline text-xs font-semibold uppercase tracking-wider text-alert hover:text-alert-dark cursor-pointer" %>

@@ -6,7 +6,7 @@
 <div class="<%= card_classes %> overflow-hidden">
   <% if @users.any? %>
     <table class="w-full text-sm">
-      <thead class="bg-paper/60 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+      <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
         <tr>
           <th class="px-5 py-3">Nombre</th>
           <th class="px-5 py-3">Email</th>
@@ -15,8 +15,8 @@
       </thead>
       <tbody class="divide-y divide-line">
         <% @users.each do |user| %>
-          <tr class="transition hover:bg-paper/60">
-            <td class="px-5 py-3 font-medium text-ink"><%= user.name %></td>
+          <tr class="transition hover:bg-raise/50">
+            <td class="px-5 py-3 font-medium text-ivory"><%= user.name %></td>
             <td class="num px-5 py-3 text-muted"><%= user.email %></td>
             <td class="px-5 py-3">
               <% if user.owner? %>

@@ -7,14 +7,14 @@
 <div class="<%= card_classes %> overflow-hidden">
   <div class="border-b border-line px-5 py-4">
     <dl class="flex flex-wrap gap-x-8 gap-y-2 text-sm">
-      <div class="flex gap-2"><dt class="text-muted">Proveedor</dt><dd class="font-semibold text-ink"><%= @purchase.supplier&.name || "—" %></dd></div>
-      <div class="flex gap-2"><dt class="text-muted">Registró</dt><dd class="font-medium text-ink"><%= @purchase.user&.name || "—" %></dd></div>
-      <div class="flex gap-2"><dt class="text-muted">Nota</dt><dd class="font-medium text-ink"><%= @purchase.note.presence || "—" %></dd></div>
+      <div class="flex gap-2"><dt class="text-muted">Proveedor</dt><dd class="font-semibold text-ivory"><%= @purchase.supplier&.name || "—" %></dd></div>
+      <div class="flex gap-2"><dt class="text-muted">Registró</dt><dd class="font-medium text-ivory"><%= @purchase.user&.name || "—" %></dd></div>
+      <div class="flex gap-2"><dt class="text-muted">Nota</dt><dd class="font-medium text-ivory"><%= @purchase.note.presence || "—" %></dd></div>
     </dl>
   </div>
 
   <table class="w-full text-sm">
-    <thead class="bg-paper/60 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+    <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
       <tr>
         <th class="px-5 py-3">Producto</th>
         <th class="px-5 py-3 text-right">Cantidad</th>
@@ -24,15 +24,15 @@
     </thead>
     <tbody class="divide-y divide-line">
       <% @purchase.items.each do |item| %>
-        <tr class="transition hover:bg-paper/60">
-          <td class="px-5 py-3"><%= link_to item.product.name, item.product, class: "font-medium text-ink hover:text-hazard" %></td>
-          <td class="num px-5 py-3 text-right text-ink-soft"><%= item.quantity %> <%= item.product.unit %></td>
-          <td class="num px-5 py-3 text-right text-ink-soft"><%= money(item.unit_cost) %></td>
+        <tr class="transition hover:bg-raise/50">
+          <td class="px-5 py-3"><%= link_to item.product.name, item.product, class: "font-medium text-ivory hover:text-gold" %></td>
+          <td class="num px-5 py-3 text-right text-ivory-soft"><%= item.quantity %> <%= item.product.unit %></td>
+          <td class="num px-5 py-3 text-right text-ivory-soft"><%= money(item.unit_cost) %></td>
           <td class="num px-5 py-3 text-right font-semibold"><%= money(item.line_subtotal) %></td>
         </tr>
       <% end %>
-      <tr class="border-t-2 border-line bg-paper/60">
-        <td class="px-5 py-3 font-display text-sm font-bold uppercase tracking-wide text-ink" colspan="3">Total</td>
+      <tr class="border-t-2 border-line bg-raise/50">
+        <td class="px-5 py-3 font-display text-sm font-bold uppercase tracking-wide text-ivory" colspan="3">Total</td>
         <td class="num px-5 py-3 text-right font-display text-base font-bold text-ok"><%= money(@purchase.total) %></td>
       </tr>
     </tbody>

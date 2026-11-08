@@ -18,7 +18,7 @@
       <%= form.collection_select :supplier_id, @suppliers, :id, :name, { include_blank: "Todos", selected: params[:supplier_id] }, class: field_classes %>
     </div>
     <%= form.submit "Filtrar", class: "#{button_classes(:secondary)} cursor-pointer" %>
-    <%= link_to "Limpiar", purchases_path, class: "text-xs font-semibold uppercase tracking-wider text-hazard hover:text-hazard-dark" %>
+    <%= link_to "Limpiar", purchases_path, class: "text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
   <% end %>
 </div>
 
@@ -26,7 +26,7 @@
   <% if @purchases.any? %>
     <div class="overflow-x-auto">
       <table class="w-full text-sm">
-        <thead class="bg-paper/60 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+        <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
           <tr>
             <th class="px-5 py-3">N°</th>
             <th class="px-5 py-3">Fecha</th>
@@ -37,13 +37,13 @@
         </thead>
         <tbody class="divide-y divide-line">
           <% @purchases.each do |purchase| %>
-            <tr class="transition hover:bg-paper/60">
+            <tr class="transition hover:bg-raise/50">
               <td class="num px-5 py-3 text-faint">#<%= purchase.number %></td>
               <td class="num px-5 py-3"><%= simple_date(purchase.created_at) %></td>
               <td class="px-5 py-3 font-medium"><%= purchase.supplier&.name || "—" %></td>
               <td class="num px-5 py-3 text-right font-semibold"><%= money(purchase.total) %></td>
               <td class="px-5 py-3 text-right">
-                <%= link_to "Ver", purchase, class: "text-xs font-semibold uppercase tracking-wider text-hazard hover:text-hazard-dark" %>
+                <%= link_to "Ver", purchase, class: "text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
               </td>
             </tr>
           <% end %>

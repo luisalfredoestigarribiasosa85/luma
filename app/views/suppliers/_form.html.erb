@@ -5,7 +5,7 @@
 <div class="max-w-lg <%= card_classes %> p-6">
   <%= render "shared/form_errors", object: @supplier %>
   <%= form_with model: @supplier, class: "space-y-4" do |form| %>
-    <div class="hazard mb-2 h-1 w-10"></div>
+    <div class="ember mb-2 h-1 w-10"></div>
     <div>
       <%= form.label :name, "Razón social", class: label_classes %>
       <%= form.text_field :name, required: true, autofocus: true, class: field_classes %>

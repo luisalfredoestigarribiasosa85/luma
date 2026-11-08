@@ -1,6 +1,6 @@
 <% content_for(:title) { "Venta ##{@sale.number}" } %>
 
-<div class="hazardbar"></div>
+<div class="goldbar"></div>
 
 <div class="center">
   <p class="font-bold"><%= current_account.name %></p>
@@ -60,3 +60,4 @@
 <% if current_account.ticket_footer.present? %>
   <p class="center muted"><%= current_account.ticket_footer %></p>
 <% end %>
+<p class="center wordmark" style="font-size:10px; letter-spacing:0.3em; text-indent:0.3em; color:#14110d; margin-top:10px">Luma</p>

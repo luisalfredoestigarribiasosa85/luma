@@ -15,7 +15,7 @@
 <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
   <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Ventas del día</p>
-    <p class="num font-display mt-2 text-2xl font-bold text-ink"><%= @sale_count %></p>
+    <p class="num font-display mt-2 text-2xl font-bold text-ivory"><%= @sale_count %></p>
   </div>
   <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Ingreso total</p>
@@ -27,25 +27,25 @@
   </div>
   <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Clientes con compra</p>
-    <p class="num font-display mt-2 text-2xl font-bold text-ink"><%= @customer_count %></p>
+    <p class="num font-display mt-2 text-2xl font-bold text-ivory"><%= @customer_count %></p>
   </div>
 </div>
 
 <div class="mt-6 grid gap-6 xl:grid-cols-2">
   <div class="<%= card_classes %> overflow-hidden">
     <div class="border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Desglose por forma de pago</h3>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Desglose por forma de pago</h3>
     </div>
     <table class="w-full text-sm">
       <tbody class="divide-y divide-line">
         <% @by_payment.each do |method, amount| %>
-          <tr class="transition hover:bg-paper/60">
-            <td class="px-5 py-3 capitalize text-ink-soft"><%= method %></td>
-            <td class="num px-5 py-3 text-right font-semibold text-ink"><%= money(amount) %></td>
+          <tr class="transition hover:bg-raise/50">
+            <td class="px-5 py-3 capitalize text-ivory-soft"><%= method %></td>
+            <td class="num px-5 py-3 text-right font-semibold text-ivory"><%= money(amount) %></td>
           </tr>
         <% end %>
-        <tr class="border-t-2 border-line bg-paper/60">
-          <td class="px-5 py-3 font-display text-sm font-bold uppercase tracking-wide text-ink">Total</td>
+        <tr class="border-t-2 border-line bg-raise/50">
+          <td class="px-5 py-3 font-display text-sm font-bold uppercase tracking-wide text-ivory">Total</td>
           <td class="num px-5 py-3 text-right font-display text-base font-bold text-ok"><%= money(@total) %></td>
         </tr>
       </tbody>
@@ -54,12 +54,12 @@
 
   <div class="<%= card_classes %> overflow-hidden">
     <div class="border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Ventas del día</h3>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Ventas del día</h3>
     </div>
     <% if @sales.any? %>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
-          <thead class="bg-paper/60 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+          <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
             <tr>
               <th class="px-5 py-3">N°</th>
               <th class="px-5 py-3">Hora</th>
@@ -70,12 +70,12 @@
           </thead>
           <tbody class="divide-y divide-line">
             <% @sales.each do |sale| %>
-              <tr class="transition hover:bg-paper/60">
+              <tr class="transition hover:bg-raise/50">
                 <td class="num px-5 py-3 text-faint">#<%= sale.number %></td>
                 <td class="num px-5 py-3 text-muted"><%= sale.created_at.strftime("%H:%M") %></td>
-                <td class="px-5 py-3"><%= link_to (sale.customer&.name || "Consumidor final"), sale, class: "font-medium text-ink hover:text-hazard" %></td>
-                <td class="px-5 py-3 capitalize text-ink-soft"><%= sale.payment_method %></td>
-                <td class="num px-5 py-3 text-right font-semibold text-ink"><%= money(sale.total) %></td>
+                <td class="px-5 py-3"><%= link_to (sale.customer&.name || "Consumidor final"), sale, class: "font-medium text-ivory hover:text-gold" %></td>
+                <td class="px-5 py-3 capitalize text-ivory-soft"><%= sale.payment_method %></td>
+                <td class="num px-5 py-3 text-right font-semibold text-ivory"><%= money(sale.total) %></td>
               </tr>
             <% end %>
           </tbody>

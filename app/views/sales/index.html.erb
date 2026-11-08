@@ -6,7 +6,7 @@
   <div class="card overflow-hidden">
     <table class="w-full text-left text-sm">
       <thead>
-        <tr class="border-b border-line bg-paper/60 text-[10px] font-bold uppercase tracking-wider text-muted">
+        <tr class="border-b border-line bg-raise/50 text-[10px] font-bold uppercase tracking-wider text-muted">
           <th class="px-5 py-3">N°</th>
           <th class="px-5 py-3">Fecha</th>
           <th class="px-5 py-3">Cliente</th>
@@ -17,7 +17,7 @@
       </thead>
       <tbody class="divide-y divide-line">
         <% @sales.each do |sale| %>
-          <tr class="transition hover:bg-paper/60">
+          <tr class="transition hover:bg-raise/50">
             <td class="num px-5 py-3.5 text-faint">#<%= sale.number %></td>
             <td class="num px-5 py-3.5"><%= simple_date(sale.created_at) %></td>
             <td class="px-5 py-3.5 font-medium"><%= sale.customer&.name || "Consumidor final" %></td>
@@ -28,7 +28,7 @@
             </td>
             <td class="num px-5 py-3.5 text-right font-semibold"><%= money(sale.total) %></td>
             <td class="px-5 py-3.5 text-right">
-              <%= link_to "Ver", sale_path(sale), class: "text-xs font-semibold uppercase tracking-wider text-hazard hover:text-hazard-dark" %>
+              <%= link_to "Ver", sale_path(sale), class: "text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
             </td>
           </tr>
         <% end %>

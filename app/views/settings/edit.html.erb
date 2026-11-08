@@ -6,7 +6,7 @@
 
 <%= form_with model: @account, url: settings_path, method: :patch, class: "max-w-xl space-y-6" do |form| %>
   <div class="<%= card_classes %> p-6">
-    <div class="hazard mb-4 h-1 w-10"></div>
+    <div class="ember mb-4 h-1 w-10"></div>
     <div class="space-y-4">
       <div>
         <%= form.label :name, "Nombre de la tienda", class: label_classes %>
@@ -26,7 +26,7 @@
   </div>
 
   <div class="<%= card_classes %> p-6">
-    <div class="hazard mb-4 h-1 w-10"></div>
+    <div class="ember mb-4 h-1 w-10"></div>
     <div>
       <%= form.label :ticket_footer, "Mensaje del ticket", class: label_classes %>
       <%= form.text_area :ticket_footer, rows: 2, class: field_classes,

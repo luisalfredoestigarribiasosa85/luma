@@ -1,32 +1,29 @@
 <% content_for(:page_title) { "Iniciar sesión" } %>
 
-<div class="w-full max-w-sm">
-  <div class="mb-8">
-    <div class="hazard h-1.5 w-24"></div>
-    <div class="mt-5 flex items-center gap-3">
-      <%= image_tag "luma-logo.jpeg", alt: "Logo de LUMA", class: "h-30 w-30 rounded object-contain" %>
-      <div>
-        <h1 class="font-display text-2xl font-black tracking-wide text-ink">LUMA</h1>
-        <p class="text-xs uppercase tracking-[0.18em] text-muted">Control de ventas e inventario</p>
-      </div>
+<div class="grid min-h-screen lg:grid-cols-2">
+  <%= render "shared/brand_panel" %>
+
+  <div class="flex items-center justify-center px-5 py-12 sm:px-8">
+    <div class="w-full max-w-sm reveal">
+      <p class="eyebrow">Bienvenido de nuevo</p>
+      <h1 class="font-display mt-2 text-3xl font-bold text-ivory">Iniciar sesión</h1>
+      <div class="ember mt-4 h-px w-20"></div>
+
+      <%= form_with url: session_path, method: :post, class: "mt-7 space-y-5" do |form| %>
+        <div>
+          <%= form.label :email, "Email", class: label_classes %>
+          <%= form.email_field :email, autofocus: true, autocomplete: "email", required: true, class: field_classes %>
+        </div>
+        <div>
+          <%= form.label :password, "Contraseña", class: label_classes %>
+          <%= form.password_field :password, autocomplete: "current-password", required: true, class: field_classes %>
+        </div>
+        <%= form.submit "Ingresar", class: "#{button_classes} w-full" %>
+      <% end %>
+
+      <p class="mt-8 text-center text-sm text-muted">
+        ¿No tenés cuenta? <%= link_to "Crear cuenta", signup_path, class: "font-semibold text-gold hover:text-gold-bright" %>
+      </p>
     </div>
   </div>
-
-  <div class="card p-7">
-    <%= form_with url: session_path, method: :post, class: "space-y-5" do |form| %>
-      <div>
-        <%= form.label :email, "Email", class: label_classes %>
-        <%= form.email_field :email, autofocus: true, autocomplete: "email", required: true, class: field_classes %>
-      </div>
-      <div>
-        <%= form.label :password, "Contraseña", class: label_classes %>
-        <%= form.password_field :password, autocomplete: "current-password", required: true, class: field_classes %>
-      </div>
-      <%= form.submit "Ingresar", class: "#{button_classes} w-full" %>
-    <% end %>
-  </div>
-
-  <p class="mt-8 text-center text-sm text-muted">
-    ¿No tenés cuenta? <%= link_to "Crear cuenta", signup_path, class: "font-semibold text-hazard hover:text-hazard-dark" %>
-  </p>
 </div>

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title><%= content_for(:title) || "Ferresys" %></title>
+    <title><%= content_for(:title) || "LUMA" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Ferresys">
+    <meta name="application-name" content="LUMA">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0d0b08">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -17,30 +18,30 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Fragment+Mono:ital@0;1&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="min-h-screen text-ink antialiased">
+  <body class="min-h-screen text-ivory antialiased">
     <% if logged_in? %>
       <div class="flex min-h-screen">
         <%= render "layouts/sidebar" %>
 
         <div class="flex flex-1 flex-col lg:pl-64">
-          <header class="sticky top-0 z-20 flex h-14 items-center justify-between gap-4 border-b border-line bg-paper/85 px-4 backdrop-blur lg:px-8">
+          <header class="sticky top-0 z-20 flex h-14 items-center justify-between gap-4 border-b border-ivory/10 bg-abyss/80 px-4 backdrop-blur-md lg:px-8">
             <div class="flex items-center gap-3">
-              <button data-action="click->sidebar#toggle" class="rounded-md p-2 text-muted hover:bg-ink/5 lg:hidden" aria-label="Menú">
+              <button data-action="click->sidebar#toggle" class="rounded-md p-2 text-muted transition hover:bg-ivory/5 hover:text-ivory lg:hidden" aria-label="Menú">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" /></svg>
               </button>
-              <h1 class="font-display text-lg font-bold text-ink"><%= content_for(:page_title) || "Panel" %></h1>
+              <h1 class="font-display text-lg font-bold text-ivory"><%= content_for(:page_title) || "Panel" %></h1>
             </div>
 
             <div class="hidden items-center gap-3 md:flex">
               <span class="num text-xs uppercase tracking-wider text-muted"><%= current_account.name %></span>
               <span class="h-5 w-px bg-line-dark"></span>
-              <span class="num text-xs font-medium text-ink-soft"><%= current_user.name %></span>
+              <span class="num text-xs font-medium text-ivory-soft"><%= current_user.name %></span>
               <%= button_to session_path, method: :delete, class: "btn btn-secondary !px-3 !py-1.5 cursor-pointer", data: { turbo_method: :delete } do %>
                 Salir
               <% end %>
@@ -56,11 +57,9 @@
         </div>
       </div>
     <% else %>
-      <main class="flex min-h-screen items-center justify-center px-4">
-        <div class="w-full reveal">
-          <%= render "shared/flash" %>
-          <%= yield %>
-        </div>
+      <main class="min-h-screen">
+        <%= render "shared/flash" %>
+        <%= yield %>
       </main>
     <% end %>
   </body>

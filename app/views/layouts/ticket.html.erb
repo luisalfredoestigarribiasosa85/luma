@@ -2,34 +2,38 @@
 <html lang="es">
   <head>
     <meta charset="utf-8">
-    <title><%= content_for(:title) || "Ticket" %> · Ferresys</title>
+    <title><%= content_for(:title) || "Ticket" %> · LUMA</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..800&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
     <style>
-      body { background: #e5e0d5; }
+      body { background: #ece7db; }
       .ticket-shell { display: flex; justify-content: center; padding: 24px; }
-      .ticket { width: 80mm; max-width: 80mm; background: #fffdf8; color: #201d17; font-family: "Fragment Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 11px; line-height: 1.45; padding: 16px; box-shadow: 0 10px 25px rgba(0,0,0,.18); border-top: 8px solid #201d17; }
-      .ticket .hazardbar { height: 6px; background: repeating-linear-gradient(-45deg, #201d17 0 5px, #d9481c 5px 10px); margin-bottom: 10px; }
+      .ticket { width: 80mm; max-width: 80mm; background: #fffdf8; color: #14110d; font-family: "Fragment Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 11px; line-height: 1.45; padding: 16px; box-shadow: 0 10px 25px rgba(0,0,0,.25); border-top: 8px solid #14110d; }
+      .ticket .goldbar { height: 6px; background: linear-gradient(90deg, #14110d 0 18%, #8f6b33 18% 30%, #d4a94f 30% 42%, #ecd08e 42% 50%, #d4a94f 50% 58%, #8f6b33 58% 70%, #14110d 70% 100%); margin-bottom: 10px; }
       .ticket .center { text-align: center; }
-      .ticket .muted { color: #6b6659; }
+      .ticket .wordmark { font-family: "Cinzel", serif; font-size: 17px; letter-spacing: 0.35em; text-indent: 0.35em; text-transform: uppercase; }
+      .ticket .muted { color: #6b655a; }
       .ticket h1 { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
       .ticket .row { display: flex; justify-content: space-between; gap: 8px; }
       .ticket .item { display: flex; justify-content: space-between; gap: 8px; }
       .ticket .item .desc { flex: 1; }
-      .ticket .divider { border-top: 1px dashed #a39d90; margin: 8px 0; }
-      .ticket .total { font-size: 15px; font-weight: 700; color: #d9481c; }
+      .ticket .divider { border-top: 1px dashed #a89a83; margin: 8px 0; }
+      .ticket .total { font-size: 15px; font-weight: 700; color: #8f6b33; }
       .ticket table { width: 100%; border-collapse: collapse; }
       .ticket table td { padding: 2px 0; vertical-align: top; }
       .ticket table td.right { text-align: right; white-space: nowrap; }
       .no-print { text-align: center; padding: 8px 0 16px; }
-      .no-print button { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 10px 22px; border-radius: 8px; background: #d9481c; color: #fff; border: 0; cursor: pointer; }
-      .no-print button.secondary { background: #201d17; margin-left: 8px; }
+      .no-print button { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 10px 22px; border-radius: 8px; background: #d4a94f; color: #1d1607; border: 0; cursor: pointer; }
+      .no-print button.secondary { background: #14110d; color: #ece1cb; margin-left: 8px; }
       @media print {
         body { background: #fff; }
         .ticket-shell { padding: 0; }
         .ticket { box-shadow: none; padding: 0; border-top-width: 0; }
-        .ticket .hazardbar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .ticket .goldbar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         .no-print { display: none; }
         @page { margin: 0; }
       }

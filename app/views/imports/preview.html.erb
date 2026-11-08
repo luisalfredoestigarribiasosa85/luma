@@ -8,7 +8,7 @@
 <div class="grid gap-4 sm:grid-cols-3">
   <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Filas totales</p>
-    <p class="num font-display mt-2 text-2xl font-bold text-ink"><%= @importer.rows.count %></p>
+    <p class="num font-display mt-2 text-2xl font-bold text-ivory"><%= @importer.rows.count %></p>
   </div>
   <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Correctas (se importarán)</p>
@@ -16,18 +16,18 @@
   </div>
   <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Con errores</p>
-    <p class="num font-display mt-2 text-2xl font-bold <%= error_rows.any? ? "text-alert" : "text-ink" %>"><%= error_rows.count %></p>
+    <p class="num font-display mt-2 text-2xl font-bold <%= error_rows.any? ? "text-alert" : "text-ivory" %>"><%= error_rows.count %></p>
   </div>
 </div>
 
 <div class="mt-6 <%= card_classes %> overflow-hidden">
   <div class="border-b border-line px-5 py-4">
-    <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Vista previa</h3>
+    <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Vista previa</h3>
   </div>
 
   <div class="overflow-x-auto">
     <table class="w-full text-sm">
-      <thead class="bg-paper/60 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+      <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
         <tr>
           <th class="px-5 py-3">Fila</th>
           <th class="px-5 py-3">Nombre</th>
@@ -42,11 +42,11 @@
         <% @importer.rows.first(200).each do |row| %>
           <tr class="<%= row[:errors].present? ? "bg-alert-soft/50" : "" %>">
             <td class="num px-5 py-2.5 text-faint"><%= row[:index] %></td>
-            <td class="px-5 py-2.5 font-medium text-ink"><%= row[:attrs][ "nombre" ].presence || "—" %></td>
-            <td class="px-5 py-2.5 text-ink-soft"><%= row[:attrs][ "categoria" ].presence || "" %></td>
-            <td class="num px-5 py-2.5 text-right text-ink-soft"><%= money(row[:attrs][ "costo" ].to_i) %></td>
-            <td class="num px-5 py-2.5 text-right text-ink-soft"><%= money(row[:attrs][ "precio" ].to_i) %></td>
-            <td class="num px-5 py-2.5 text-right text-ink-soft"><%= row[:attrs][ "stock" ] %></td>
+            <td class="px-5 py-2.5 font-medium text-ivory"><%= row[:attrs][ "nombre" ].presence || "—" %></td>
+            <td class="px-5 py-2.5 text-ivory-soft"><%= row[:attrs][ "categoria" ].presence || "" %></td>
+            <td class="num px-5 py-2.5 text-right text-ivory-soft"><%= money(row[:attrs][ "costo" ].to_i) %></td>
+            <td class="num px-5 py-2.5 text-right text-ivory-soft"><%= money(row[:attrs][ "precio" ].to_i) %></td>
+            <td class="num px-5 py-2.5 text-right text-ivory-soft"><%= row[:attrs][ "stock" ] %></td>
             <td class="px-5 py-2.5">
               <% if row[:errors].present? %>
                 <span class="badge badge-alert" title="<%= row[:errors].join(", ") %>">Error</span>

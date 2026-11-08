@@ -1,46 +1,49 @@
 <% content_for(:page_title) { "Crear cuenta" } %>
 
-<div class="w-full max-w-sm">
-  <div class="mb-8">
-    <div class="hazard h-1.5 w-24"></div>
-    <h1 class="font-display mt-5 text-2xl font-black tracking-wide text-ink">Crear tu cuenta</h1>
-    <p class="mt-1 text-sm text-muted">Cada cuenta corresponde a una tienda</p>
+<div class="grid min-h-screen lg:grid-cols-2">
+  <%= render "shared/brand_panel" %>
+
+  <div class="flex items-center justify-center px-5 py-12 sm:px-8">
+    <div class="w-full max-w-sm reveal">
+      <p class="eyebrow">Tu cuenta</p>
+      <h1 class="font-display mt-2 text-3xl font-bold text-ivory">Crear cuenta</h1>
+      <div class="ember mt-4 h-px w-20"></div>
+      <p class="mt-4 text-sm text-muted">Cada cuenta corresponde a una tienda.</p>
+
+      <%= form_with scope: :registration, url: signup_path, method: :post, local: true, class: "mt-6 space-y-5" do |form| %>
+        <%= render "shared/form_errors", object: @user %>
+
+        <div>
+          <%= form.label :account_name, "Nombre de la tienda", class: label_classes %>
+          <%= form.text_field :account_name, autofocus: true, required: true, class: field_classes, placeholder: "Tienda Ejemplo" %>
+        </div>
+
+        <div>
+          <%= form.label :name, "Tu nombre", class: label_classes %>
+          <%= form.text_field :name, required: true, class: field_classes %>
+        </div>
+
+        <div>
+          <%= form.label :email, "Email", class: label_classes %>
+          <%= form.email_field :email, autocomplete: "email", required: true, class: field_classes %>
+        </div>
+
+        <div>
+          <%= form.label :password, "Contraseña (mínimo 8 caracteres)", class: label_classes %>
+          <%= form.password_field :password, autocomplete: "new-password", required: true, minlength: 8, class: field_classes %>
+        </div>
+
+        <div>
+          <%= form.label :password_confirmation, "Confirmar contraseña", class: label_classes %>
+          <%= form.password_field :password_confirmation, autocomplete: "new-password", required: true, class: field_classes %>
+        </div>
+
+        <%= form.submit "Crear cuenta", class: "#{button_classes} w-full" %>
+      <% end %>
+
+      <p class="mt-6 text-center text-sm text-muted">
+        ¿Ya tenés cuenta? <%= link_to "Iniciar sesión", new_session_path, class: "font-semibold text-gold hover:text-gold-bright" %>
+      </p>
+    </div>
   </div>
-
-  <div class="card p-7">
-    <%= form_with scope: :registration, url: signup_path, method: :post, local: true, class: "space-y-5" do |form| %>
-      <%= render "shared/form_errors", object: @user %>
-
-      <div>
-        <%= form.label :account_name, "Nombre de la tienda", class: label_classes %>
-        <%= form.text_field :account_name, autofocus: true, required: true, class: field_classes, placeholder: "Tienda Ejemplo" %>
-      </div>
-
-      <div>
-        <%= form.label :name, "Tu nombre", class: label_classes %>
-        <%= form.text_field :name, required: true, class: field_classes %>
-      </div>
-
-      <div>
-        <%= form.label :email, "Email", class: label_classes %>
-        <%= form.email_field :email, autocomplete: "email", required: true, class: field_classes %>
-      </div>
-
-      <div>
-        <%= form.label :password, "Contraseña (mínimo 8 caracteres)", class: label_classes %>
-        <%= form.password_field :password, autocomplete: "new-password", required: true, minlength: 8, class: field_classes %>
-      </div>
-
-      <div>
-        <%= form.label :password_confirmation, "Confirmar contraseña", class: label_classes %>
-        <%= form.password_field :password_confirmation, autocomplete: "new-password", required: true, class: field_classes %>
-      </div>
-
-      <%= form.submit "Crear cuenta", class: "#{button_classes} w-full" %>
-    <% end %>
-  </div>
-
-  <p class="mt-8 text-center text-sm text-muted">
-    ¿Ya tenés cuenta? <%= link_to "Iniciar sesión", new_session_path, class: "font-semibold text-hazard hover:text-hazard-dark" %>
-  </p>
 </div>
