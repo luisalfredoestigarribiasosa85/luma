@@ -18,7 +18,7 @@
       <%= form.collection_select :supplier_id, @suppliers, :id, :name, { include_blank: "Todos", selected: params[:supplier_id] }, class: field_classes %>
     </div>
     <%= form.submit "Filtrar", class: "#{button_classes(:secondary)} cursor-pointer" %>
-    <%= link_to "Limpiar", purchases_path, class: "text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
+    <%= link_to "Limpiar", purchases_path, class: "text-xs font-semibold uppercase tracking-wider text-bronze hover:text-bronze-deep" %>
   <% end %>
 </div>
 
@@ -43,7 +43,7 @@
               <td class="px-5 py-3 font-medium"><%= purchase.supplier&.name || "—" %></td>
               <td class="num px-5 py-3 text-right font-semibold"><%= money(purchase.total) %></td>
               <td class="px-5 py-3 text-right">
-                <%= link_to "Ver", purchase, class: "text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
+                <%= link_to "Ver", purchase, class: "text-xs font-semibold uppercase tracking-wider text-bronze hover:text-bronze-deep" %>
               </td>
             </tr>
           <% end %>

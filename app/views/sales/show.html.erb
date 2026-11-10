@@ -8,7 +8,7 @@
 <div class="grid gap-6 xl:grid-cols-3">
   <div class="<%= card_classes %> overflow-hidden xl:col-span-2">
     <div class="flex items-center justify-between border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Detalle de la venta</h3>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Detalle de la venta</h3>
       <% if @sale.completed? %>
         <span class="badge badge-ok">Completada</span>
       <% else %>
@@ -29,9 +29,9 @@
         <tbody class="divide-y divide-line">
           <% @sale.items.each do |item| %>
             <tr>
-              <td class="px-5 py-3 font-medium text-ivory"><%= item.product.name %></td>
-              <td class="num px-5 py-3 text-right text-ivory-soft"><%= money(item.unit_price) %></td>
-              <td class="num px-5 py-3 text-right text-ivory-soft"><%= item.quantity %> <%= item.product.unit %></td>
+              <td class="px-5 py-3 font-medium text-ink"><%= item.product.name %></td>
+              <td class="num px-5 py-3 text-right text-ink-soft"><%= money(item.unit_price) %></td>
+              <td class="num px-5 py-3 text-right text-ink-soft"><%= item.quantity %> <%= item.product.unit %></td>
               <td class="num px-5 py-3 text-right font-semibold"><%= money(item.line_subtotal) %></td>
             </tr>
           <% end %>
@@ -43,7 +43,7 @@
       <dl class="ml-auto max-w-xs space-y-2 font-mono">
         <div class="flex justify-between"><dt class="text-muted">Subtotal</dt><dd><%= money(@sale.subtotal) %></dd></div>
         <div class="flex justify-between"><dt class="text-muted">Descuento</dt><dd><%= money(@sale.discount) %></dd></div>
-        <div class="flex justify-between border-t border-dashed border-line-dark pt-2 font-display text-base font-bold text-ivory"><dt>Total</dt><dd class="text-gold"><%= money(@sale.total) %></dd></div>
+        <div class="flex justify-between border-t border-dashed border-line-dark pt-2 font-display text-base font-bold text-ink"><dt>Total</dt><dd class="text-bronze"><%= money(@sale.total) %></dd></div>
       </dl>
     </div>
   </div>
@@ -51,13 +51,13 @@
   <div class="space-y-6">
     <div class="<%= card_classes %> p-6">
       <div class="ember mb-4 h-1 w-10"></div>
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Datos</h3>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Datos</h3>
       <dl class="mt-4 space-y-3 text-sm">
-        <div class="flex justify-between"><dt class="text-muted">Cliente</dt><dd class="font-medium text-ivory"><%= @sale.customer&.name.presence || "Consumidor final" %></dd></div>
-        <div class="flex justify-between"><dt class="text-muted">Forma de pago</dt><dd class="font-medium text-ivory capitalize"><%= @sale.payment_method %></dd></div>
-        <div class="flex justify-between"><dt class="text-muted">Vendedor</dt><dd class="font-medium text-ivory"><%= @sale.user&.name || "—" %></dd></div>
+        <div class="flex justify-between"><dt class="text-muted">Cliente</dt><dd class="font-medium text-ink"><%= @sale.customer&.name.presence || "Consumidor final" %></dd></div>
+        <div class="flex justify-between"><dt class="text-muted">Forma de pago</dt><dd class="font-medium text-ink capitalize"><%= @sale.payment_method %></dd></div>
+        <div class="flex justify-between"><dt class="text-muted">Vendedor</dt><dd class="font-medium text-ink"><%= @sale.user&.name || "—" %></dd></div>
         <% if @sale.note.present? %>
-          <div class="flex flex-col gap-1"><dt class="text-muted">Nota</dt><dd class="font-medium text-ivory"><%= @sale.note %></dd></div>
+          <div class="flex flex-col gap-1"><dt class="text-muted">Nota</dt><dd class="font-medium text-ink"><%= @sale.note %></dd></div>
         <% end %>
       </dl>
     </div>
@@ -65,7 +65,7 @@
     <% if @sale.credit? && @sale.completed? %>
       <div class="<%= card_classes %> p-6">
         <div class="flex items-center justify-between">
-          <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Saldo pendiente</h3>
+          <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Saldo pendiente</h3>
           <span class="badge badge-alert"><%= money(@sale.balance) %></span>
         </div>
         <p class="mt-1 text-sm text-muted">Total <%= money(@sale.total) %> · Pagado <%= money(@sale.total - @sale.balance) %></p>
@@ -74,7 +74,7 @@
             <% @sale.payments.order(created_at: :desc).each do |payment| %>
               <li class="flex items-center justify-between py-2 text-sm">
                 <div>
-                  <span class="font-medium capitalize text-ivory"><%= payment.payment_method %></span>
+                  <span class="font-medium capitalize text-ink"><%= payment.payment_method %></span>
                   <span class="text-muted"> · <%= simple_date(payment.created_at) %></span>
                 </div>
                 <span class="num font-semibold text-ok"><%= money(payment.amount) %></span>

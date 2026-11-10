@@ -5,6 +5,7 @@
 
 <div class="<%= card_classes %> overflow-hidden">
   <% if @users.any? %>
+    <div class="overflow-x-auto">
     <table class="w-full text-sm">
       <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
         <tr>
@@ -16,7 +17,7 @@
       <tbody class="divide-y divide-line">
         <% @users.each do |user| %>
           <tr class="transition hover:bg-raise/50">
-            <td class="px-5 py-3 font-medium text-ivory"><%= user.name %></td>
+            <td class="px-5 py-3 font-medium text-ink"><%= user.name %></td>
             <td class="num px-5 py-3 text-muted"><%= user.email %></td>
             <td class="px-5 py-3">
               <% if user.owner? %>
@@ -29,6 +30,7 @@
         <% end %>
       </tbody>
     </table>
+    </div>
   <% else %>
     <%= render "shared/empty_state", message: "No hay empleados" %>
   <% end %>

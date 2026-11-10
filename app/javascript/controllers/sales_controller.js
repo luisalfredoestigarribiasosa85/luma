@@ -85,11 +85,11 @@ export default class extends Controller {
         this.changeLabelTarget.textContent = "Vuelto"
         this.changeTarget.textContent = this.format(Math.max(change, 0))
         this.changeTarget.classList.remove("text-alert")
-        this.changeTarget.classList.add("text-gold")
+        this.changeTarget.classList.add("text-bronze")
       } else {
         this.changeLabelTarget.textContent = "Faltan"
         this.changeTarget.textContent = this.format(-change)
-        this.changeTarget.classList.remove("text-gold")
+        this.changeTarget.classList.remove("text-bronze")
         this.changeTarget.classList.add("text-alert")
       }
     }

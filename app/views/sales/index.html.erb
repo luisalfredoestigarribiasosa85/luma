@@ -4,6 +4,7 @@
 
 <% if @sales.any? %>
   <div class="card overflow-hidden">
+    <div class="overflow-x-auto">
     <table class="w-full text-left text-sm">
       <thead>
         <tr class="border-b border-line bg-raise/50 text-[10px] font-bold uppercase tracking-wider text-muted">
@@ -28,12 +29,13 @@
             </td>
             <td class="num px-5 py-3.5 text-right font-semibold"><%= money(sale.total) %></td>
             <td class="px-5 py-3.5 text-right">
-              <%= link_to "Ver", sale_path(sale), class: "text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
+              <%= link_to "Ver", sale_path(sale), class: "text-xs font-semibold uppercase tracking-wider text-bronze hover:text-bronze-deep" %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
+    </div>
   </div>
 <% else %>
   <%= render "shared/empty_state", message: "No hubo ventas aún" %>

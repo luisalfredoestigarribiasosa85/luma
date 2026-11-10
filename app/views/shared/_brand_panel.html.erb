@@ -1,12 +1,14 @@
-<div class="relative flex flex-col items-center justify-center overflow-hidden bg-black px-6 py-12 text-center lg:px-10 lg:py-0">
+<div class="on-dark relative flex flex-col items-center justify-center overflow-hidden bg-black px-6 py-12 text-center lg:px-10 lg:py-0">
   <%# Resplandor de la llama, inspirado en la luz del logotipo %>
   <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(ellipse 72% 58% at 50% 40%, rgba(212,169,79,0.22) 0%, rgba(212,169,79,0.05) 42%, transparent 68%)"></div>
 
-  <%= image_tag "luma-logo.jpeg", alt: "LUMA — la llama dorada",
-        class: "relative w-56 sm:w-64 lg:w-80 xl:w-96 mix-blend-screen select-none ember-glow" %>
+  <div class="relative rounded-xl border border-gold-deep/40 bg-[#0e0c0a] px-5 py-5 shadow-[0_0_70px_rgba(212,169,79,0.2),inset_0_0_40px_rgba(212,169,79,0.06)]">
+    <%= image_tag "lela.jpeg", alt: "LUMA — la llama dorada",
+          class: "relative w-48 sm:w-56 lg:w-64 xl:w-72 select-none" %>
+  </div>
 
   <p class="eyebrow relative mt-6 lg:mt-10">Punto de venta e inventario</p>
-  <p class="relative mt-3 max-w-xs text-sm leading-relaxed text-ivory-soft lg:max-w-sm">
+  <p class="relative mt-3 max-w-xs text-sm leading-relaxed text-ash lg:max-w-sm">
     Ventas, stock y caja de tu ferretería, siempre con la luz encendida.
   </p>
 

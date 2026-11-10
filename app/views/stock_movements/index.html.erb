@@ -36,7 +36,7 @@
             <tr class="transition hover:bg-raise/50">
               <td class="num px-5 py-3 text-muted"><%= simple_date(movement.created_at) %></td>
               <td class="px-5 py-3">
-                <%= link_to movement.product.name, movement.product, class: "font-medium text-ivory hover:text-gold" %>
+                <%= link_to movement.product.name, movement.product, class: "font-medium text-ink hover:text-bronze" %>
                 <span class="num block text-xs text-faint"><%= movement.product.sku.presence || "" %></span>
               </td>
               <td class="px-5 py-3">
@@ -45,7 +45,7 @@
               <td class="num px-5 py-3 text-right font-semibold <%= movement.quantity.positive? ? "text-ok" : "text-alert" %>">
                 <%= movement.signed_quantity %>
               </td>
-              <td class="num px-5 py-3 text-right text-ivory-soft"><%= movement.new_quantity %></td>
+              <td class="num px-5 py-3 text-right text-ink-soft"><%= movement.new_quantity %></td>
               <td class="px-5 py-3 text-muted"><%= movement.note.presence || "—" %></td>
             </tr>
           <% end %>

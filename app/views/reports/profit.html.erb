@@ -21,11 +21,11 @@
 <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
   <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Ventas del período</p>
-    <p class="num font-display mt-2 text-2xl font-bold text-ivory"><%= @sale_count %></p>
+    <p class="num font-display mt-2 text-2xl font-bold text-ink"><%= @sale_count %></p>
   </div>
   <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Ingresos por ventas</p>
-    <p class="num font-display mt-2 text-2xl font-bold text-ivory"><%= money(@revenue) %></p>
+    <p class="num font-display mt-2 text-2xl font-bold text-ink"><%= money(@revenue) %></p>
   </div>
   <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Costo de lo vendido</p>
@@ -40,9 +40,9 @@
     <p class="eyebrow">Gastos del período</p>
     <p class="num font-display mt-2 text-2xl font-bold text-alert">− <%= money(@expenses_total) %></p>
   </div>
-  <div class="<%= card_classes %> p-5 border border-gold-deep/40">
+  <div class="<%= card_classes %> p-5 border border-bronze-deep/40">
     <p class="eyebrow">Ganancia neta</p>
-    <p class="num font-display mt-2 text-2xl font-bold <%= @net.negative? ? "text-alert" : "text-gold" %>"><%= money(@net) %></p>
+    <p class="num font-display mt-2 text-2xl font-bold <%= @net.negative? ? "text-alert" : "text-bronze" %>"><%= money(@net) %></p>
     <p class="num mt-1 text-xs text-faint">Margen <%= number_to_percentage(@net_margin, precision: 1) %></p>
   </div>
 </div>
@@ -50,25 +50,27 @@
 <div class="mt-6 grid gap-6 xl:grid-cols-2">
   <div class="<%= card_classes %> overflow-hidden">
     <div class="border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Gastos por categoría</h3>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Gastos por categoría</h3>
     </div>
     <% if @expenses_by_category.any? %>
+      <div class="overflow-x-auto">
       <table class="w-full text-sm">
         <tbody class="divide-y divide-line">
           <% max_expense = @expenses_by_category.map(&:last).max %>
           <% @expenses_by_category.each do |category, amount| %>
             <tr>
-              <td class="px-5 py-3 text-ivory-soft"><%= Expense::CATEGORY_LABELS[category] || category %></td>
+              <td class="px-5 py-3 text-ink-soft"><%= Expense::CATEGORY_LABELS[category] || category %></td>
               <td class="px-5 py-3 w-40">
                 <div class="h-1.5 overflow-hidden rounded-full bg-raise">
                   <div class="ember h-full rounded-full" style="width: <%= (amount / max_expense * 100).round %>%"></div>
                 </div>
               </td>
-              <td class="num px-5 py-3 text-right font-semibold text-ivory"><%= money(amount) %></td>
+              <td class="num px-5 py-3 text-right font-semibold text-ink"><%= money(amount) %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
+      </div>
     <% else %>
       <%= render "shared/empty_state", message: "No hay gastos en el período" %>
     <% end %>
@@ -76,17 +78,17 @@
 
   <div class="<%= card_classes %> p-6">
     <div class="ember mb-4 h-1 w-10"></div>
-    <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Cómo se calcula</h3>
-    <div class="mt-4 space-y-3 text-sm leading-relaxed text-ivory-soft">
+    <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Cómo se calcula</h3>
+    <div class="mt-4 space-y-3 text-sm leading-relaxed text-ink-soft">
       <dl class="space-y-2 font-mono text-[13px]">
         <div class="flex justify-between"><dt class="text-muted">Ingresos por ventas</dt><dd><%= money(@revenue) %></dd></div>
         <div class="flex justify-between"><dt class="text-muted">− Costo de lo vendido</dt><dd><%= money(@cogs) %></dd></div>
         <div class="flex justify-between border-t border-dashed border-line-dark pt-2"><dt class="text-muted">= Ganancia bruta</dt><dd><%= money(@gross) %></dd></div>
         <div class="flex justify-between"><dt class="text-muted">− Gastos operativos</dt><dd><%= money(@expenses_total) %></dd></div>
-        <div class="flex justify-between border-t border-dashed border-line-dark pt-2 font-semibold text-gold"><dt>Ganancia neta</dt><dd><%= money(@net) %></dd></div>
+        <div class="flex justify-between border-t border-dashed border-line-dark pt-2 font-semibold text-bronze"><dt>Ganancia neta</dt><dd><%= money(@net) %></dd></div>
       </dl>
       <p class="text-xs text-faint">El costo de lo vendido usa el costo unitario congelado en cada línea de venta. Las compras a proveedor del período (<%= money(@purchases_total) %>) son capital inmovilizado en stock, no un gasto: entran al resultado recién cuando la mercadería se vende.</p>
-      <p class="text-xs text-faint">Los descuentos otorgados ya están descontados de los ingresos. Los gastos en efectivo descuentan la caja en <%= link_to "Caja diaria", daily_cash_reports_path, class: "text-gold hover:text-gold-bright" %>.</p>
+      <p class="text-xs text-faint">Los descuentos otorgados ya están descontados de los ingresos. Los gastos en efectivo descuentan la caja en <%= link_to "Caja diaria", daily_cash_reports_path, class: "text-bronze hover:text-bronze-deep" %>.</p>
     </div>
   </div>
 </div>

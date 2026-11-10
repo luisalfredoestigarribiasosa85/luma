@@ -49,7 +49,7 @@
           <%= form.select :unit, %w[unidad par caja kg metro litro docena], {}, class: field_classes %>
         </div>
         <div class="flex items-end pb-2">
-          <label class="inline-flex items-center gap-2.5 text-sm font-medium text-ivory-soft">
+          <label class="inline-flex items-center gap-2.5 text-sm font-medium text-ink-soft">
             <%= form.check_box :active, class: "h-4 w-4 rounded border-line-dark accent-gold" %>
             Producto activo (visible en ventas)
           </label>
@@ -65,11 +65,11 @@
 
   <div class="<%= card_classes %> h-fit p-6">
     <div class="ember mb-4 h-1 w-10"></div>
-    <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Ayuda</h3>
+    <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Ayuda</h3>
     <ul class="mt-4 space-y-2.5 text-sm leading-relaxed text-muted">
-      <li><strong class="text-ivory">Costo:</strong> se usa para calcular la utilidad de las ventas.</li>
-      <li><strong class="text-ivory">Stock inicial:</strong> genera un movimiento de ajuste al crear el producto.</li>
-      <li><strong class="text-ivory">Stock mínimo:</strong> al llegar a ese nivel, el producto se marca como stock bajo.</li>
+      <li><strong class="text-ink">Costo:</strong> se usa para calcular la utilidad de las ventas.</li>
+      <li><strong class="text-ink">Stock inicial:</strong> genera un movimiento de ajuste al crear el producto.</li>
+      <li><strong class="text-ink">Stock mínimo:</strong> al llegar a ese nivel, el producto se marca como stock bajo.</li>
     </ul>
   </div>
 </div>

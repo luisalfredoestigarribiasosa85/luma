@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 /*
- * LUMA — "La antorcha"
- * Negro cálido + oro champán + marfil. La identidad del logo: la llama dorada
- * flotando sobre negro, el wordmark en capitalinas engraved.
- * Display en Cinzel (capitalinas incisas), cuerpo en Instrument Sans,
- * datos en Fragment Mono. Un único acento (oro) y nada más.
+ * LUMA — "La antorcha", edición clara
+ * Papel cálido + tinta + bronce champán. La identidad del logo (llama dorada,
+ * capitalinas incisas) pero al día: el sidebar y el panel de marca se quedan
+ * en obsidiana — el cartel del local. Un solo acento (bronce) y nada más.
+ * Display en Cinzel, cuerpo en Instrument Sans, datos en Fragment Mono.
  */
 
 @theme {
@@ -13,30 +13,36 @@
   --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Fragment Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
-  --color-abyss: #0d0b08;      /* base de página: negro cálido */
-  --color-obsidian: #080706;   /* sidebar: negro más profundo */
-  --color-onyx: #171310;       /* superficie de tarjetas */
-  --color-surface: #171310;    /* alias */
-  --color-raise: #1f1a15;      /* hover / bandas elevadas */
-  --color-ivory: #ece1cb;      /* texto principal */
-  --color-ivory-soft: #cfc3ac; /* texto secundario */
-  --color-muted: #a4967f;      /* texto terciario */
-  --color-faint: #7d7261;      /* metadatos */
-  --color-line: #272118;       /* hairline base */
-  --color-line-dark: #3b3222;  /* hairline fuerte (tinte oro) */
+  --color-paper: #f5f0e6;      /* base de página: papel cálido */
+  --color-surface: #fffdf7;    /* superficie de tarjetas */
+  --color-raise: #ece7db;      /* hover / bandas elevadas */
+  --color-ink: #221e17;        /* texto principal */
+  --color-ink-soft: #57503f;   /* texto secundario */
+  --color-muted: #8a7f6d;      /* texto terciario */
+  --color-faint: #8d8271;      /* metadatos */
+  --color-line: #e1dbcc;       /* hairline base */
+  --color-line-dark: #c7bfa9;  /* hairline fuerte */
 
-  --color-gold: #d4a94f;       /* acento champán */
+  --color-gold: #d4a94f;       /* oro de marca (decorativo, barras) */
   --color-gold-bright: #ecd08e;/* brillo de la llama */
-  --color-gold-deep: #8f6b33;  /* sombra del metal */
-  --color-gold-soft: #241d10;  /* fondo teñido oro */
+  --color-gold-deep: #8f6b33;  /* bronce claro: bordes, hairlines cálidas */
+  --color-gold-soft: #f0e7d2;  /* fondo teñido oro */
 
-  --color-ok: #8ccb9b;
-  --color-ok-soft: #15231a;
-  --color-alert: #e08b74;
-  --color-alert-dark: #c96f5a;
-  --color-alert-soft: #291510;
-  --color-warn: #ddbb6a;
-  --color-warn-soft: #251f10;
+  --color-bronze: #8f6b33;     /* bronce para texto/enlaces sobre papel */
+  --color-bronze-deep: #6e5220;/* bronce oscuro: hover */
+
+  /* Plaque (sidebar + panel de marca): el cartel obsidiana */
+  --color-obsidian: #080706;
+  --color-ivory: #ece1cb;
+  --color-ash: #a4967f;
+
+  --color-ok: #2e7d4f;
+  --color-ok-soft: #eaf3ec;
+  --color-alert: #b3402f;
+  --color-alert-dark: #8f2f23;
+  --color-alert-soft: #f9ece8;
+  --color-warn: #8a6a10;
+  --color-warn-soft: #f5efd9;
 }
 
 @layer base {
@@ -47,20 +53,20 @@
 
   body {
     font-family: var(--font-sans);
-    color: var(--color-ivory);
-    background-color: var(--color-abyss);
+    color: var(--color-ink);
+    background-color: var(--color-paper);
     background-image:
-      radial-gradient(ellipse 90% 55% at 50% -10%, rgba(212, 169, 79, 0.085), transparent 60%);
+      radial-gradient(ellipse 90% 55% at 50% -10%, rgba(212, 169, 79, 0.22), transparent 60%);
     background-attachment: fixed;
   }
 
   ::selection {
     background: var(--color-gold);
-    color: #14100a;
+    color: #2b1f08;
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 2px solid var(--color-bronze);
     outline-offset: 2px;
   }
 }
@@ -79,9 +85,14 @@
   .eyebrow {
     font-family: var(--font-display);
     font-size: 0.6875rem;
-    font-weight: 400;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.22em;
+    color: var(--color-bronze);
+  }
+
+  /* En el cartel obsidiana el oro es el que manda */
+  .on-dark .eyebrow {
     color: var(--color-gold);
   }
 
@@ -91,17 +102,17 @@
   }
 
   .card {
-    background: var(--color-onyx);
+    background: var(--color-surface);
     border: 1px solid var(--color-line);
     border-radius: 0.75rem;
-    box-shadow: inset 0 1px 0 rgba(236, 225, 203, 0.04), 0 18px 40px -24px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 1px 0 rgba(34, 30, 23, 0.03), 0 12px 28px -22px rgba(34, 30, 23, 0.35);
   }
 
   .label {
     display: block;
     font-size: 0.8125rem;
     font-weight: 600;
-    color: var(--color-ivory-soft);
+    color: var(--color-ink-soft);
     margin-bottom: 0.375rem;
   }
 
@@ -109,10 +120,10 @@
     width: 100%;
     border-radius: 0.5rem;
     border: 1px solid var(--color-line-dark);
-    background: #100e0b;
+    background: #fbf9ef;
     padding: 0.55rem 0.8rem;
     font-size: 0.875rem;
-    color: var(--color-ivory);
+    color: var(--color-ink);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
@@ -122,8 +133,8 @@
 
   .field:focus {
     outline: none;
-    border-color: var(--color-gold);
-    box-shadow: 0 0 0 3px rgba(212, 169, 79, 0.18);
+    border-color: var(--color-bronze);
+    box-shadow: 0 0 0 3px rgba(143, 107, 51, 0.22);
   }
 
   .field-error {
@@ -132,7 +143,7 @@
 
   .field-error:focus {
     border-color: var(--color-alert) !important;
-    box-shadow: 0 0 0 3px rgba(224, 139, 116, 0.16);
+    box-shadow: 0 0 0 3px rgba(179, 64, 47, 0.18);
   }
 
   .btn {
@@ -142,7 +153,7 @@
     gap: 0.45rem;
     font-family: var(--font-display);
     font-size: 0.8125rem;
-    font-weight: 400;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.14em;
     border-radius: 0.5rem;
@@ -157,37 +168,36 @@
   }
 
   .btn-primary {
-    background: linear-gradient(175deg, var(--color-gold-bright) 0%, var(--color-gold) 48%, var(--color-gold-deep) 130%);
-    color: #1d1607;
-    font-weight: 400;
-    box-shadow: inset 0 1px 0 rgba(255, 246, 214, 0.7), 0 10px 24px -12px rgba(212, 169, 79, 0.45);
+    background: linear-gradient(175deg, #e3c471 0%, #c0963c 48%, #8a6a2b 130%);
+    color: #2b1f08;
+    box-shadow: inset 0 1px 0 rgba(255, 248, 220, 0.8), 0 8px 18px -12px rgba(143, 107, 51, 0.55);
   }
 
   .btn-primary:hover {
-    background: linear-gradient(175deg, #f6e2ab 0%, #ddb75e 48%, #96742f 130%);
-    box-shadow: inset 0 1px 0 rgba(255, 246, 214, 0.8), 0 12px 28px -12px rgba(236, 208, 142, 0.5);
+    background: linear-gradient(175deg, #eccf85 0%, #cda94f 48%, #96762f 130%);
+    box-shadow: inset 0 1px 0 rgba(255, 248, 220, 0.9), 0 10px 22px -12px rgba(143, 107, 51, 0.65);
   }
 
   .btn-secondary {
-    background: transparent;
-    color: var(--color-ivory);
+    background: var(--color-surface);
+    color: var(--color-ink);
     border: 1px solid var(--color-line-dark);
   }
 
   .btn-secondary:hover {
     background: var(--color-raise);
-    border-color: var(--color-gold-deep);
-    color: var(--color-gold-bright);
+    border-color: var(--color-bronze);
+    color: var(--color-bronze-deep);
   }
 
   .btn-danger {
     background: var(--color-alert-dark);
     color: #fff3ec;
-    box-shadow: 0 10px 22px -12px rgba(201, 111, 90, 0.5);
+    box-shadow: 0 8px 18px -12px rgba(143, 47, 35, 0.6);
   }
 
   .btn-danger:hover {
-    background: #d95f48;
+    background: #a8402f;
   }
 
   .badge {
@@ -198,7 +208,7 @@
     padding: 0.16rem 0.55rem;
     font-family: var(--font-display);
     font-size: 0.6875rem;
-    font-weight: 400;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.09em;
     border: 1px solid transparent;
@@ -207,29 +217,29 @@
   .badge-ok {
     background: var(--color-ok-soft);
     color: var(--color-ok);
-    border-color: rgba(140, 203, 155, 0.22);
+    border-color: rgba(46, 125, 79, 0.25);
   }
 
   .badge-alert {
     background: var(--color-alert-soft);
     color: var(--color-alert);
-    border-color: rgba(224, 139, 116, 0.25);
+    border-color: rgba(179, 64, 47, 0.25);
   }
 
   .badge-warn {
     background: var(--color-warn-soft);
     color: var(--color-warn);
-    border-color: rgba(221, 187, 106, 0.25);
+    border-color: rgba(138, 106, 16, 0.28);
   }
 
   .badge-ink {
     background: linear-gradient(175deg, var(--color-gold-bright), var(--color-gold));
-    color: #1d1607;
+    color: #2b1f08;
   }
 
   .badge-neutral {
-    background: rgba(236, 225, 203, 0.06);
-    color: var(--color-ivory-soft);
+    background: rgba(34, 30, 23, 0.06);
+    color: var(--color-ink-soft);
     border-color: var(--color-line);
   }
 }

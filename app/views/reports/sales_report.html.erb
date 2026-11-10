@@ -22,15 +22,15 @@
 <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
   <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Ventas realizadas</p>
-    <p class="num font-display mt-2 text-2xl font-bold text-ivory"><%= @sale_count %></p>
+    <p class="num font-display mt-2 text-2xl font-bold text-ink"><%= @sale_count %></p>
   </div>
   <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Ingreso total</p>
-    <p class="num font-display mt-2 text-2xl font-bold text-ivory"><%= money(@total) %></p>
+    <p class="num font-display mt-2 text-2xl font-bold text-ink"><%= money(@total) %></p>
   </div>
   <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Unidades vendidas</p>
-    <p class="num font-display mt-2 text-2xl font-bold text-ivory"><%= @unit_count %></p>
+    <p class="num font-display mt-2 text-2xl font-bold text-ink"><%= @unit_count %></p>
   </div>
   <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Ganancia bruta</p>
@@ -49,7 +49,7 @@
 <div class="mt-6 grid gap-6 xl:grid-cols-2">
   <div class="<%= card_classes %> overflow-hidden">
     <div class="border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Ventas por día</h3>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Ventas por día</h3>
     </div>
     <% if @daily_totals.any? %>
       <% max = @daily_totals.map(&:last).max.to_f %>
@@ -58,8 +58,8 @@
           <% @daily_totals.each do |day, total| %>
             <div>
               <div class="flex items-center justify-between text-sm">
-                <dt class="font-medium text-ivory-soft"><%= I18n.l(day, format: :short) %></dt>
-                <dd class="num font-semibold text-ivory"><%= money(total) %></dd>
+                <dt class="font-medium text-ink-soft"><%= I18n.l(day, format: :short) %></dt>
+                <dd class="num font-semibold text-ink"><%= money(total) %></dd>
               </div>
               <% width = max.zero? ? 0 : (total.to_f / max * 100) %>
               <div class="mt-1 h-2 w-full overflow-hidden rounded-full bg-line">
@@ -76,7 +76,7 @@
 
   <div class="<%= card_classes %> overflow-hidden">
     <div class="border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Top 10 productos por ganancia</h3>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Top 10 productos por ganancia</h3>
     </div>
     <% if @top_products.any? %>
       <div class="overflow-x-auto">
@@ -94,9 +94,9 @@
             <% @top_products.each_with_index do |row, index| %>
               <tr class="transition hover:bg-raise/50">
                 <td class="num px-5 py-3 text-faint"><%= index + 1 %></td>
-                <td class="px-5 py-3 font-medium text-ivory"><%= row.name %></td>
-                <td class="num px-5 py-3 text-right text-ivory-soft"><%= row.total_quantity %></td>
-                <td class="num px-5 py-3 text-right font-semibold text-ivory"><%= money(row.total_amount) %></td>
+                <td class="px-5 py-3 font-medium text-ink"><%= row.name %></td>
+                <td class="num px-5 py-3 text-right text-ink-soft"><%= row.total_quantity %></td>
+                <td class="num px-5 py-3 text-right font-semibold text-ink"><%= money(row.total_amount) %></td>
                 <td class="num px-5 py-3 text-right font-semibold text-ok"><%= money(row.total_profit) %></td>
               </tr>
             <% end %>
@@ -110,7 +110,7 @@
 
   <div class="<%= card_classes %> overflow-hidden">
     <div class="border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Ventas por categoría</h3>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Ventas por categoría</h3>
     </div>
     <% if @by_category.any? %>
       <table class="w-full text-sm">
@@ -125,16 +125,16 @@
         <tbody class="divide-y divide-line">
           <% @by_category.each do |row| %>
             <tr class="transition hover:bg-raise/50">
-              <td class="px-5 py-3 text-ivory-soft"><%= row.name %></td>
+              <td class="px-5 py-3 text-ink-soft"><%= row.name %></td>
               <td class="num px-5 py-3 text-right text-muted"><%= row.total_quantity %></td>
-              <td class="num px-5 py-3 text-right font-semibold text-ivory"><%= money(row.total_amount) %></td>
+              <td class="num px-5 py-3 text-right font-semibold text-ink"><%= money(row.total_amount) %></td>
               <td class="num px-5 py-3 text-right font-semibold text-ok"><%= money(row.total_profit) %></td>
             </tr>
           <% end %>
           <tr class="border-t-2 border-line bg-raise/50">
-            <td class="px-5 py-3 font-display text-sm font-bold uppercase tracking-wide text-ivory">Total</td>
+            <td class="px-5 py-3 font-display text-sm font-bold uppercase tracking-wide text-ink">Total</td>
             <td class="num px-5 py-3 text-right text-muted"><%= @unit_count %></td>
-            <td class="num px-5 py-3 text-right font-display text-base font-bold text-ivory"><%= money(@total) %></td>
+            <td class="num px-5 py-3 text-right font-display text-base font-bold text-ink"><%= money(@total) %></td>
             <td class="num px-5 py-3 text-right font-display text-base font-bold text-ok"><%= money(@profit) %></td>
           </tr>
         </tbody>
@@ -146,15 +146,15 @@
 
   <div class="<%= card_classes %> overflow-hidden">
     <div class="border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Ventas por vendedor</h3>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Ventas por vendedor</h3>
     </div>
     <% if @by_seller.any? %>
       <table class="w-full text-sm">
         <tbody class="divide-y divide-line">
           <% @by_seller.each do |name, total| %>
             <tr class="transition hover:bg-raise/50">
-              <td class="px-5 py-3 text-ivory-soft"><%= name || "Sin vendedor" %></td>
-              <td class="num px-5 py-3 text-right font-semibold text-ivory"><%= money(total) %></td>
+              <td class="px-5 py-3 text-ink-soft"><%= name || "Sin vendedor" %></td>
+              <td class="num px-5 py-3 text-right font-semibold text-ink"><%= money(total) %></td>
             </tr>
           <% end %>
         </tbody>

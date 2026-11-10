@@ -4,10 +4,10 @@
   link_to("Nueva venta", new_sale_path, class: button_classes) %>
 
 <% stat_cards = [
-  { label: "Ventas de hoy", value: @sales_count, tone: "text-ivory" },
+  { label: "Ventas de hoy", value: @sales_count, tone: "text-ink" },
   { label: "Ingresos de hoy", value: money(@daily_total), tone: "text-ok" },
-  { label: "Ingresos del mes", value: money(@month_total), tone: "text-ivory" },
-  { label: "Productos", value: @product_count, tone: "text-ivory" }
+  { label: "Ingresos del mes", value: money(@month_total), tone: "text-ink" },
+  { label: "Productos", value: @product_count, tone: "text-ink" }
 ] %>
 
 <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -39,7 +39,7 @@
 <div class="mt-8 grid gap-6 xl:grid-cols-2">
   <div class="card overflow-hidden reveal" style="animation-delay: 280ms">
     <div class="flex items-center justify-between border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Últimas ventas</h3>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Últimas ventas</h3>
     </div>
     <div class="p-5">
       <% if @recent_sales.any? %>
@@ -48,7 +48,7 @@
             <li class="flex items-center justify-between py-3">
               <%= link_to sale_path(sale), class: "group flex items-baseline gap-3" do %>
                 <span class="num text-xs text-faint">#<%= sale.number %></span>
-                <span class="group-hover:text-gold"><%= sale.customer&.name || "Consumidor final" %></span>
+                <span class="group-hover:text-bronze"><%= sale.customer&.name || "Consumidor final" %></span>
               <% end %>
               <span class="num font-display text-sm font-bold"><%= money(sale.total) %></span>
             </li>
@@ -62,8 +62,8 @@
 
   <div class="card overflow-hidden reveal" style="animation-delay: 320ms">
     <div class="flex items-center justify-between border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Top productos del mes</h3>
-      <%= link_to "Reporte de ventas", sales_report_reports_path, class: "text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Top productos del mes</h3>
+      <%= link_to "Reporte de ventas", sales_report_reports_path, class: "text-xs font-semibold uppercase tracking-wider text-bronze hover:text-bronze-deep" %>
     </div>
     <div class="p-5">
       <% if @top_products.any? %>
@@ -85,8 +85,8 @@
 <div class="mt-8 grid gap-6 xl:grid-cols-2">
   <div class="card overflow-hidden reveal" style="animation-delay: 360ms">
     <div class="flex items-center justify-between border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Stock bajo</h3>
-      <%= link_to "Productos", products_path, class: "text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Stock bajo</h3>
+      <%= link_to "Productos", products_path, class: "text-xs font-semibold uppercase tracking-wider text-bronze hover:text-bronze-deep" %>
     </div>
     <div class="p-5">
       <% if @low_stock_products.any? %>
@@ -111,7 +111,7 @@
 
   <div class="card overflow-hidden reveal" style="animation-delay: 400ms">
     <div class="border-b border-line px-5 py-4">
-      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ivory">Ventas del mes por vendedor</h3>
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Ventas del mes por vendedor</h3>
     </div>
     <div class="p-5">
       <% if @seller_totals.any? %>

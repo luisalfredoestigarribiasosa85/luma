@@ -5,7 +5,7 @@
 
 <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
   <div>
-    <%= link_to "Importar desde Excel", new_import_path, class: "text-sm font-semibold uppercase tracking-wider text-gold hover:text-gold-bright" %>
+    <%= link_to "Importar desde Excel", new_import_path, class: "text-sm font-semibold uppercase tracking-wider text-bronze hover:text-bronze-deep" %>
   </div>
   <div class="flex flex-1 gap-2 sm:justify-end">
     <%= form_with url: products_path, method: :get, class: "flex flex-1 gap-2 sm:max-w-2xl" do |form| %>
@@ -35,12 +35,12 @@
             <tr class="transition hover:bg-raise/50">
               <td class="num px-5 py-3 text-xs text-faint"><%= product.sku.presence || "—" %></td>
               <td class="px-5 py-3">
-                <%= link_to product.name, product, class: "font-medium text-ivory hover:text-gold" %>
+                <%= link_to product.name, product, class: "font-medium text-ink hover:text-bronze" %>
               </td>
               <td class="px-5 py-3 text-muted"><%= product.category&.name || "—" %></td>
               <td class="num px-5 py-3 text-right font-medium"><%= money(product.price) %></td>
               <td class="num px-5 py-3 text-right">
-                <span class="<%= product.low_stock? ? "font-bold text-alert" : "text-ivory-soft" %>">
+                <span class="<%= product.low_stock? ? "font-bold text-alert" : "text-ink-soft" %>">
                   <%= product.stock %> <%= product.unit %>
                 </span>
               </td>

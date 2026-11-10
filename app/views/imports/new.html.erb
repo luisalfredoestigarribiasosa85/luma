@@ -5,21 +5,22 @@
 <div class="max-w-2xl <%= card_classes %> p-6">
   <%= render "shared/form_errors", object: @product if @product %>
 
-  <p class="text-sm leading-relaxed text-ivory-soft">
-    Subí tu <strong class="text-ivory">Excel</strong> (.xlsx / .xls) o un archivo <strong class="text-ivory">CSV</strong> con tus productos.
-    Cada fila es un producto. Se toma la <strong class="text-ivory">primera hoja</strong> y la primera fila debe ser la de <strong class="text-ivory">encabezados</strong>.
-    Descargá la <strong class="text-ivory">plantilla</strong> para ver las columnas correctas.
+  <p class="text-sm leading-relaxed text-ink-soft">
+    Subí tu <strong class="text-ink">Excel</strong> (.xlsx / .xls) o un archivo <strong class="text-ink">CSV</strong> con tus productos.
+    Cada fila es un producto. Se toma la <strong class="text-ink">primera hoja</strong> y la primera fila debe ser la de <strong class="text-ink">encabezados</strong>.
+    Descargá la <strong class="text-ink">plantilla</strong> para ver las columnas correctas.
   </p>
 
   <div class="mt-4">
-    <%= link_to(template_imports_path, class: "inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-gold hover:text-gold-bright") do %>
+    <%= link_to(template_imports_path, class: "inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-bronze hover:text-bronze-deep") do %>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
       plantilla_productos.csv
     <% end %>
   </div>
 
-  <h4 class="font-display mt-6 text-sm font-bold uppercase tracking-wide text-ivory">Columnas esperadas</h4>
+  <h4 class="font-display mt-6 text-sm font-bold uppercase tracking-wide text-ink">Columnas esperadas</h4>
   <div class="mt-2 overflow-hidden rounded-lg border border-line">
+    <div class="overflow-x-auto">
     <table class="w-full text-sm">
       <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
         <tr>
@@ -28,7 +29,7 @@
           <th class="px-4 py-2">Ejemplo</th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-line text-ivory-soft">
+      <tbody class="divide-y divide-line text-ink-soft">
         <tr><td class="num px-4 py-2 text-xs">nombre*</td><td class="px-4 py-2">Nombre del producto</td><td class="px-4 py-2">Remera oversized</td></tr>
         <tr><td class="num px-4 py-2 text-xs">sku</td><td class="px-4 py-2">Código único (opcional)</td><td class="px-4 py-2">re-2</td></tr>
         <tr><td class="num px-4 py-2 text-xs">categoria</td><td class="px-4 py-2">Nombre de la categoría (se crea si no existe)</td><td class="px-4 py-2">Ropa</td></tr>
@@ -39,6 +40,7 @@
         <tr><td class="num px-4 py-2 text-xs">unidad</td><td class="px-4 py-2">Unidad de medida</td><td class="px-4 py-2">unidad / caja / bolsa</td></tr>
       </tbody>
     </table>
+    </div>
   </div>
 
   <p class="mt-4 text-xs leading-relaxed text-muted">* obligatorio. Las columnas van como encabezados en la primera fila. Antes de importar vas a poder revisar cuántos productos están bien y cuáles tienen errores.</p>
