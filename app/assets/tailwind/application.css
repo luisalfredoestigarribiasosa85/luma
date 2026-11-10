@@ -91,6 +91,25 @@
     color: var(--color-bronze);
   }
 
+  /* Scrollbar fina y oscura para el cartel obsidiana */
+  .slim-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #3b3222 transparent;
+  }
+
+  .slim-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .slim-scroll::-webkit-scrollbar-thumb {
+    background: #3b3222;
+    border-radius: 999px;
+  }
+
+  .slim-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
   /* En el cartel obsidiana el oro es el que manda */
   .on-dark .eyebrow {
     color: var(--color-gold);

@@ -2,7 +2,7 @@
   <div class="grid flex-1 grid-cols-12 gap-2">
     <div class="col-span-12 sm:col-span-6">
       <%= f.select :product_id,
-          options_from_collection_for_select(@products, :id, ->(p) { "#{p.name} — #{money(p.price)}" }, f.object&.product_id),
+          options_from_collection_for_select(@products, :id, ->(p) { product_select_label(p, p.price) }, f.object&.product_id),
           { include_blank: "Seleccionar producto" },
           { class: "field", required: true, data: { sales_target: "product", action: "change->sales#selectProduct" } } %>
       <p class="num mt-1 text-xs text-faint" data-sales-target="stockHint">—</p>

@@ -53,7 +53,7 @@
               <td class="num px-5 py-3 text-muted"><%= simple_date(payment.created_at) %></td>
               <td class="px-5 py-3 font-medium text-ink"><%= payment.customer.name %></td>
               <td class="px-5 py-3"><%= link_to "##{payment.sale.number}", sale_path(payment.sale), class: "num text-xs text-faint hover:text-bronze" %></td>
-              <td class="px-5 py-3 capitalize text-ink-soft"><%= payment.payment_method %></td>
+              <td class="px-5 py-3 text-ink-soft"><%= payment_method_label(payment.payment_method) %></td>
               <td class="num px-5 py-3 text-right font-semibold text-ok"><%= money(payment.amount) %></td>
               <td class="px-5 py-3 text-muted"><%= payment.user&.name || "—" %></td>
             </tr>

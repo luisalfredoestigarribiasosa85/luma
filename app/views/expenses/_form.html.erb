@@ -14,7 +14,7 @@
       </div>
       <div>
         <%= form.label :payment_method, "Forma de pago", class: label_classes %>
-        <%= form.select :payment_method, Expense.payment_methods.map { |k, _| [ k.titleize, k ] }, {}, class: field_classes %>
+        <%= form.select :payment_method, payment_method_options(Expense.payment_methods), {}, class: field_classes %>
       </div>
     </div>
 

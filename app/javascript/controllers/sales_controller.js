@@ -2,10 +2,16 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["lines", "template", "line", "product", "quantity", "unitPrice", "subtotal", "discount", "summaryCount", "summarySubtotal", "summaryTotal", "paymentMethod", "cashBlock", "cashReceived", "changeLabel", "change"]
+  static values = { stockLimit: Boolean }
 
   connect() {
     this.loadCatalog()
     this.nextLineIndex = this.countLines() + 1
+    // Si la línea ya viene con un producto elegido (ej. desde "Vender" en /products),
+    // precargar precio, stock y subtotal.
+    this.productTargets.forEach((select) => {
+      if (select.value) this.selectProduct({ currentTarget: select })
+    })
     this.toggleCash()
     this.recalculate()
   }
@@ -40,12 +46,31 @@ export default class extends Controller {
 
     if (product) {
       priceField.value = product.price
-      quantityField.max = product.stock
-      stockHint.textContent = `Stock: ${product.stock} ${product.unit}`
+
+      if (this.stockLimitValue) {
+        // En ventas no se puede vender más de lo que hay.
+        if (product.stock >= 1) {
+          quantityField.max = product.stock
+          stockHint.textContent = `Stock: ${product.stock} ${product.unit}`
+          stockHint.classList.remove("text-alert")
+          stockHint.classList.add("text-faint")
+        } else {
+          quantityField.removeAttribute("max")
+          stockHint.textContent = "Sin stock"
+          stockHint.classList.remove("text-faint")
+          stockHint.classList.add("text-alert")
+        }
+      } else {
+        // En compras no se limita la cantidad: se está reponiendo.
+        quantityField.removeAttribute("max")
+        stockHint.textContent = `Stock actual: ${product.stock} ${product.unit}`
+      }
     } else {
       priceField.value = ""
-      quantityField.max = ""
+      quantityField.removeAttribute("max")
       stockHint.textContent = "—"
+      stockHint.classList.remove("text-alert")
+      stockHint.classList.add("text-faint")
     }
     this.recalculate()
   }

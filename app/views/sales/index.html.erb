@@ -24,7 +24,7 @@
             <td class="px-5 py-3.5 font-medium"><%= sale.customer&.name || "Consumidor final" %></td>
             <td class="px-5 py-3.5">
               <span class="badge <%= sale.payment_method == "credit" ? "badge-warn" : "badge-neutral" %>">
-                <%= sale.payment_method.titleize %>
+                <%= payment_method_label(sale.payment_method) %>
               </span>
             </td>
             <td class="num px-5 py-3.5 text-right font-semibold"><%= money(sale.total) %></td>

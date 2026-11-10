@@ -59,7 +59,7 @@
               </td>
               <td class="px-5 py-3 text-muted"><%= expense.category_label %></td>
               <td class="px-5 py-3 capitalize text-ink-soft">
-                <%= expense.payment_method %>
+                <%= payment_method_label(expense.payment_method) %>
                 <% if expense.payment_method == "cash" %>
                   <span class="badge badge-warn ml-1">Efectivo</span>
                 <% end %>

@@ -22,7 +22,7 @@
       </div>
       <div>
         <%= form.label :payment_method, "Forma de pago", class: label_classes %>
-        <%= form.select :payment_method, Payment.payment_methods.map { |k, _| [ k.titleize, k ] }, {}, class: field_classes %>
+        <%= form.select :payment_method, payment_method_options(Payment.payment_methods), {}, class: field_classes %>
       </div>
     </div>
 

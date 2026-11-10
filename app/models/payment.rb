@@ -1,7 +1,7 @@
 class Payment < ApplicationRecord
   include AccountScoped
 
-  PAYMENT_METHODS = %w[cash card transfer].freeze
+  PAYMENT_METHODS = %w[cash card transfer qr].freeze
 
   belongs_to :customer
   belongs_to :sale

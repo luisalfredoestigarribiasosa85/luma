@@ -28,6 +28,7 @@
             <th class="px-5 py-3 text-right">Precio</th>
             <th class="px-5 py-3 text-right">Stock</th>
             <th class="px-5 py-3">Estado</th>
+            <th class="px-5 py-3 text-right">Acciones</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-line">
@@ -49,6 +50,13 @@
                   <span class="badge badge-ok">Activo</span>
                 <% else %>
                   <span class="badge badge-neutral">Inactivo</span>
+                <% end %>
+              </td>
+              <td class="px-5 py-3 text-right">
+                <% if product.active? %>
+                  <%= link_to "Vender", new_sale_path(product: product.id), class: "btn btn-primary !px-3.5 !py-1.5" %>
+                <% else %>
+                  <span class="text-xs text-faint">—</span>
                 <% end %>
               </td>
             </tr>

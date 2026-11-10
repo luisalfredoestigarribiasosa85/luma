@@ -54,7 +54,7 @@
       <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Datos</h3>
       <dl class="mt-4 space-y-3 text-sm">
         <div class="flex justify-between"><dt class="text-muted">Cliente</dt><dd class="font-medium text-ink"><%= @sale.customer&.name.presence || "Consumidor final" %></dd></div>
-        <div class="flex justify-between"><dt class="text-muted">Forma de pago</dt><dd class="font-medium text-ink capitalize"><%= @sale.payment_method %></dd></div>
+        <div class="flex justify-between"><dt class="text-muted">Forma de pago</dt><dd class="font-medium text-ink"><%= payment_method_label(@sale.payment_method) %></dd></div>
         <div class="flex justify-between"><dt class="text-muted">Vendedor</dt><dd class="font-medium text-ink"><%= @sale.user&.name || "—" %></dd></div>
         <% if @sale.note.present? %>
           <div class="flex flex-col gap-1"><dt class="text-muted">Nota</dt><dd class="font-medium text-ink"><%= @sale.note %></dd></div>
@@ -74,7 +74,7 @@
             <% @sale.payments.order(created_at: :desc).each do |payment| %>
               <li class="flex items-center justify-between py-2 text-sm">
                 <div>
-                  <span class="font-medium capitalize text-ink"><%= payment.payment_method %></span>
+                  <span class="font-medium text-ink"><%= payment_method_label(payment.payment_method) %></span>
                   <span class="text-muted"> · <%= simple_date(payment.created_at) %></span>
                 </div>
                 <span class="num font-semibold text-ok"><%= money(payment.amount) %></span>

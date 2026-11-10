@@ -40,7 +40,7 @@
       <tbody class="divide-y divide-line">
         <% @by_payment.each do |method, amount| %>
           <tr class="transition hover:bg-raise/50">
-            <td class="px-5 py-3 capitalize text-ink-soft"><%= method %></td>
+            <td class="px-5 py-3 text-ink-soft"><%= payment_method_label(method) %></td>
             <td class="num px-5 py-3 text-right font-semibold text-ink"><%= money(amount) %></td>
           </tr>
         <% end %>
@@ -73,7 +73,7 @@
               <tr class="transition hover:bg-raise/50">
                 <td class="px-5 py-3 font-medium text-ink"><%= expense.description %></td>
                 <td class="px-5 py-3 text-muted"><%= expense.category_label %></td>
-                <td class="px-5 py-3 capitalize text-ink-soft"><%= expense.payment_method %></td>
+                <td class="px-5 py-3 text-ink-soft"><%= payment_method_label(expense.payment_method) %></td>
                 <td class="num px-5 py-3 text-right font-semibold text-alert">− <%= money(expense.amount) %></td>
               </tr>
             <% end %>
@@ -113,7 +113,7 @@
                 <td class="num px-5 py-3 text-faint">#<%= sale.number %></td>
                 <td class="num px-5 py-3 text-muted"><%= sale.created_at.strftime("%H:%M") %></td>
                 <td class="px-5 py-3"><%= link_to (sale.customer&.name || "Consumidor final"), sale, class: "font-medium text-ink hover:text-bronze" %></td>
-                <td class="px-5 py-3 capitalize text-ink-soft"><%= sale.payment_method %></td>
+                <td class="px-5 py-3 text-ink-soft"><%= payment_method_label(sale.payment_method) %></td>
                 <td class="num px-5 py-3 text-right font-semibold text-ink"><%= money(sale.total) %></td>
               </tr>
             <% end %>

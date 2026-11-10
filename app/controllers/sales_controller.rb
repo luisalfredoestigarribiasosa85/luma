@@ -14,9 +14,10 @@ class SalesController < ApplicationController
 
   def new
     @sale = current_account.sales.build
-    @sale.items.build
     @products = current_account.products.active.order(:name)
     @customers = current_account.customers.order(:name)
+    preselected = params[:product].present? ? @products.find_by(id: params[:product]) : nil
+    @sale.items.build(product: preselected)
   end
 
   def create

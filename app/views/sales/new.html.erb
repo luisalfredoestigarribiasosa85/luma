@@ -5,7 +5,7 @@
 
 <%= render "shared/form_errors", object: @sale %>
 
-<%= form_with model: @sale, data: { controller: "sales" }, class: "grid items-start gap-6 xl:grid-cols-3" do |form| %>
+<%= form_with model: @sale, data: { controller: "sales", sales_stock_limit_value: true }, class: "grid items-start gap-6 xl:grid-cols-3" do |form| %>
   <div class="card p-6 xl:col-span-2">
     <div class="grid gap-4 sm:grid-cols-2">
       <div>
@@ -14,7 +14,7 @@
       </div>
       <div>
         <%= form.label :payment_method, "Forma de pago", class: label_classes %>
-        <%= form.select :payment_method, Sale.payment_methods.map { |k, _| [ k.titleize, k ] }, {}, class: field_classes, data: { sales_target: "paymentMethod", action: "change->sales#toggleCash" } %>
+        <%= form.select :payment_method, payment_method_options(Sale.payment_methods), {}, class: field_classes, data: { sales_target: "paymentMethod", action: "change->sales#toggleCash" } %>
       </div>
     </div>
 
@@ -89,9 +89,9 @@
         </div>
       </div>
 
-      <div class="mt-7 flex gap-3">
-        <%= link_to "Cancelar", sales_path, class: button_classes(:secondary) %>
-        <%= form.submit "Registrar venta", class: button_classes, data: { turbo_submits_with: "Guardando…" } %>
+      <div class="mt-7 flex flex-col gap-3">
+        <%= form.submit "Registrar venta", class: "#{button_classes} w-full", data: { turbo_submits_with: "Guardando…" } %>
+        <%= link_to "Cancelar", sales_path, class: "#{button_classes(:secondary)} w-full" %>
       </div>
 
       <p class="mt-5 border-t border-line pt-4 text-xs leading-relaxed text-faint">El precio se carga automáticamente al elegir el producto y el stock se descuenta al registrar la venta.</p>

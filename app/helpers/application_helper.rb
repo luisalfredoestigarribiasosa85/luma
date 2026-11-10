@@ -1,4 +1,25 @@
 module ApplicationHelper
+  PAYMENT_METHOD_LABELS = {
+    "cash" => "Efectivo",
+    "card" => "Tarjeta",
+    "transfer" => "Transferencia",
+    "credit" => "Crédito",
+    "qr" => "QR"
+  }.freeze
+
+  def payment_method_label(key)
+    PAYMENT_METHOD_LABELS[key.to_s] || key.to_s.titleize
+  end
+
+  def payment_method_options(enum_map)
+    enum_map.keys.map { |key| [ PAYMENT_METHOD_LABELS[key] || key.titleize, key ] }
+  end
+
+  def product_select_label(product, price)
+    base = "#{product.name} — #{money(price)}"
+    product.low_stock? ? "#{base} (stock bajo, #{product.stock} #{product.unit})" : base
+  end
+
   def money(amount)
     number_to_currency(amount || 0,
       unit: "Gs. ",

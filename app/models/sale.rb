@@ -2,7 +2,7 @@ class Sale < ApplicationRecord
   include AccountScoped
 
   STATUSES = %w[completed cancelled].freeze
-  PAYMENT_METHODS = %w[cash card transfer credit].freeze
+  PAYMENT_METHODS = %w[cash card transfer credit qr].freeze
 
   belongs_to :customer, optional: true
   belongs_to :user, optional: true

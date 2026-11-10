@@ -22,7 +22,7 @@
 <div class="row"><span class="muted">Fecha</span><span><%= @sale.created_at.strftime("%d/%m/%Y %H:%M") %></span></div>
 <div class="row"><span class="muted">Cliente</span><span><%= @sale.customer&.name.presence || "Consumidor final" %></span></div>
 <div class="row"><span class="muted">Vendedor</span><span><%= @sale.user&.name || "—" %></span></div>
-<div class="row"><span class="muted">Pago</span><span class="capitalize"><%= @sale.payment_method %></span></div>
+<div class="row"><span class="muted">Pago</span><span><%= payment_method_label(@sale.payment_method) %></span></div>
 
 <div class="divider"></div>
 

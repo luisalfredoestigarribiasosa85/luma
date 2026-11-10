@@ -66,9 +66,9 @@
         </div>
       </dl>
 
-      <div class="mt-7 flex gap-3">
-        <%= link_to "Cancelar", purchases_path, class: button_classes(:secondary) %>
-        <%= form.submit "Registrar compra", class: button_classes, data: { turbo_submits_with: "Guardando…" } %>
+      <div class="mt-7 flex flex-col gap-3">
+        <%= form.submit "Registrar compra", class: "#{button_classes} w-full", data: { turbo_submits_with: "Guardando…" } %>
+        <%= link_to "Cancelar", purchases_path, class: "#{button_classes(:secondary)} w-full" %>
       </div>
 
       <p class="mt-5 border-t border-line pt-4 text-xs leading-relaxed text-faint">El costo se carga automáticamente y el stock se suma al registrar la compra.</p>
