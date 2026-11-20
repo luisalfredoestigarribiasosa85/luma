@@ -1,0 +1,172 @@
+{
+  "simplecov_history": {
+    "format_version": 1,
+    "entries": [
+      {
+        "created_at": "2026-11-19T01:50:06Z",
+        "branch": "main",
+        "commit": "58a7de73896c42c6ff690d923c03fb563628e34c",
+        "totals": {
+          "line": 55.91
+        },
+        "groups": {
+          "Controllers": {
+            "line": 34.92
+          },
+          "Helpers": {
+            "line": 86.36
+          },
+          "Jobs": {
+            "line": 0.0
+          },
+          "Mailers": {
+            "line": 0.0
+          },
+          "Models": {
+            "line": 76.02
+          },
+          "Ungrouped": {
+            "line": 80.14
+          }
+        },
+        "files": {
+          "app/controllers/application_controller.rb": {
+            "line": 40.0
+          },
+          "app/controllers/cash_counts_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/categories_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/concerns/authentication.rb": {
+            "line": 100.0
+          },
+          "app/controllers/customers_controller.rb": {
+            "line": 44.82
+          },
+          "app/controllers/dashboard_controller.rb": {
+            "line": 100.0
+          },
+          "app/controllers/expenses_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/imports_controller.rb": {
+            "line": 68.88
+          },
+          "app/controllers/payments_controller.rb": {
+            "line": 62.5
+          },
+          "app/controllers/products_controller.rb": {
+            "line": 68.75
+          },
+          "app/controllers/purchases_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/registrations_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/reports_controller.rb": {
+            "line": 42.39
+          },
+          "app/controllers/returns_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/sales_controller.rb": {
+            "line": 40.0
+          },
+          "app/controllers/sessions_controller.rb": {
+            "line": 88.23
+          },
+          "app/controllers/settings_controller.rb": {
+            "line": 83.33
+          },
+          "app/controllers/stock_movements_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/supplier_payments_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/suppliers_controller.rb": {
+            "line": 0.0
+          },
+          "app/controllers/users_controller.rb": {
+            "line": 0.0
+          },
+          "app/helpers/application_helper.rb": {
+            "line": 86.36
+          },
+          "app/jobs/application_job.rb": {
+            "line": 0.0
+          },
+          "app/mailers/application_mailer.rb": {
+            "line": 0.0
+          },
+          "app/models/account.rb": {
+            "line": 96.42
+          },
+          "app/models/application_record.rb": {
+            "line": 100.0
+          },
+          "app/models/cash_count.rb": {
+            "line": 0.0
+          },
+          "app/models/category.rb": {
+            "line": 100.0
+          },
+          "app/models/concerns/account_scoped.rb": {
+            "line": 100.0
+          },
+          "app/models/current.rb": {
+            "line": 100.0
+          },
+          "app/models/customer.rb": {
+            "line": 100.0
+          },
+          "app/models/expense.rb": {
+            "line": 0.0
+          },
+          "app/models/payment.rb": {
+            "line": 96.96
+          },
+          "app/models/product.rb": {
+            "line": 100.0
+          },
+          "app/models/purchase.rb": {
+            "line": 91.83
+          },
+          "app/models/purchase_item.rb": {
+            "line": 91.66
+          },
+          "app/models/return.rb": {
+            "line": 56.81
+          },
+          "app/models/return_item.rb": {
+            "line": 52.17
+          },
+          "app/models/sale.rb": {
+            "line": 95.34
+          },
+          "app/models/sale_item.rb": {
+            "line": 100.0
+          },
+          "app/models/stock_movement.rb": {
+            "line": 100.0
+          },
+          "app/models/supplier.rb": {
+            "line": 100.0
+          },
+          "app/models/supplier_payment.rb": {
+            "line": 0.0
+          },
+          "app/models/user.rb": {
+            "line": 100.0
+          },
+          "app/services/product_importer.rb": {
+            "line": 80.14
+          }
+        }
+      }
+    ]
+  }
+}

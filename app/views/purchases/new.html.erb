@@ -1,5 +1,5 @@
 <% content_for(:page_title) { "Nueva compra" } %>
-<% catalog = @products.map { |p| { id: p.id, name: p.name, price: p.cost_price, unit: p.unit, stock: p.stock } }.to_json %>
+<% catalog = @products.map { |p| { id: p.id, name: p.variant_label, sku: p.sku, price: p.cost_price, unit: p.unit, stock: p.stock, low: p.low_stock? } }.to_json %>
 
 <script type="application/json" id="sale-catalog" data-turbo-cache="false"><%= raw json_escape catalog %></script>
 
@@ -7,10 +7,19 @@
 
 <%= form_with model: @purchase, data: { controller: "sales" }, class: "grid items-start gap-6 xl:grid-cols-3" do |form| %>
   <div class="<%= card_classes %> p-6 xl:col-span-2">
-    <div class="grid gap-4 sm:grid-cols-2">
-      <div>
+    <div class="grid gap-4 sm:grid-cols-3">
+      <div class="sm:col-span-2">
         <%= form.label :supplier_id, "Proveedor", class: label_classes %>
         <%= form.collection_select :supplier_id, @suppliers, :id, :name, { include_blank: "Seleccionar proveedor" }, class: field_classes %>
+      </div>
+      <div>
+        <%= form.label :payment_method, "Forma de pago", class: label_classes %>
+        <%= form.select :payment_method, payment_method_options(Purchase.payment_methods), {}, class: field_classes %>
+      </div>
+      <div class="sm:col-span-3">
+        <%= form.label :due_date, "Vencimiento (si es a crédito)", class: label_classes %>
+        <%= form.date_field :due_date, class: field_classes %>
+        <p class="mt-1 text-xs text-muted">Si elegís «Crédito», la compra queda como cuenta por pagar hasta pagarla.</p>
       </div>
     </div>
 

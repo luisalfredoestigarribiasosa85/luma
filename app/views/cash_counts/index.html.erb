@@ -1,0 +1,39 @@
+<% content_for(:page_title) { "Arqueos de caja" } %>
+
+<%= render "shared/page_header", title: "Arqueos de caja",
+  subtitle: "Historial de conteos físicos al cierre del día" %>
+
+<div class="<%= card_classes %> overflow-hidden">
+  <% if @counts.any? %>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+          <tr>
+            <th class="px-5 py-3">Fecha</th>
+            <th class="px-5 py-3">Registró</th>
+            <th class="px-5 py-3 text-right">Esperada</th>
+            <th class="px-5 py-3 text-right">Contada</th>
+            <th class="px-5 py-3 text-right">Diferencia</th>
+            <th class="px-5 py-3">Nota</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          <% @counts.each do |count| %>
+            <tr class="transition hover:bg-raise/50">
+              <td class="num px-5 py-3 text-ink-soft"><%= simple_date(count.counted_on) %></td>
+              <td class="px-5 py-3 text-muted"><%= count.user&.name || "—" %></td>
+              <td class="num px-5 py-3 text-right text-ink-soft"><%= money(count.expected) %></td>
+              <td class="num px-5 py-3 text-right text-ink"><%= money(count.counted) %></td>
+              <td class="num px-5 py-3 text-right font-semibold <%= count.difference.zero? ? "text-ok" : (count.difference.positive? ? "text-bronze" : "text-alert") %>">
+                <%= count.difference.negative? ? "−" : "+" %><%= money(count.difference.abs) %>
+              </td>
+              <td class="px-5 py-3 text-xs text-muted max-w-48 truncate" title="<%= count.note %>"><%= count.note.presence || "—" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <%= render "shared/empty_state", message: "Todavía no hay arqueos registrados" %>
+  <% end %>
+</div>

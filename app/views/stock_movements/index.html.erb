@@ -36,7 +36,7 @@
             <tr class="transition hover:bg-raise/50">
               <td class="num px-5 py-3 text-muted"><%= simple_date(movement.created_at) %></td>
               <td class="px-5 py-3">
-                <%= link_to movement.product.name, movement.product, class: "font-medium text-ink hover:text-bronze" %>
+                <%= link_to movement.product.variant_label, movement.product, class: "font-medium text-ink hover:text-bronze" %>
                 <span class="num block text-xs text-faint"><%= movement.product.sku.presence || "" %></span>
               </td>
               <td class="px-5 py-3">

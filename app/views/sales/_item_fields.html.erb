@@ -1,10 +1,15 @@
 <div class="flex items-start gap-2 rounded-lg border border-line bg-surface p-3" data-sales-target="line">
   <div class="grid flex-1 grid-cols-12 gap-2">
-    <div class="col-span-12 sm:col-span-6">
-      <%= f.select :product_id,
-          options_from_collection_for_select(@products, :id, ->(p) { product_select_label(p, p.price) }, f.object&.product_id),
-          { include_blank: "Seleccionar producto" },
-          { class: "field", required: true, data: { sales_target: "product", action: "change->sales#selectProduct" } } %>
+    <div class="col-span-12 sm:col-span-6" data-controller="product-picker">
+      <%= f.hidden_field :product_id, data: { sales_target: "product", action: "change->sales#selectProduct", product_picker_target: "hidden" } %>
+      <div class="relative">
+        <input type="text" placeholder="Buscar producto…" autocomplete="off" spellcheck="false"
+               class="field"
+               data-product-picker-target="input"
+               data-action="input->product-picker#filter focus->product-picker#filter keydown->product-picker#handleKeydown blur->product-picker#blur"
+               role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="">
+        <ul class="absolute z-20 mt-1 hidden max-h-64 w-full overflow-auto rounded-lg border border-line-dark bg-surface py-1 shadow-lg" data-product-picker-target="listbox" role="listbox"></ul>
+      </div>
       <p class="num mt-1 text-xs text-faint" data-sales-target="stockHint">—</p>
     </div>
     <div class="col-span-4 sm:col-span-2">

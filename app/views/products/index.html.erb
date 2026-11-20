@@ -36,7 +36,7 @@
             <tr class="transition hover:bg-raise/50">
               <td class="num px-5 py-3 text-xs text-faint"><%= product.sku.presence || "—" %></td>
               <td class="px-5 py-3">
-                <%= link_to product.name, product, class: "font-medium text-ink hover:text-bronze" %>
+                <%= link_to product.variant_label, product, class: "font-medium text-ink hover:text-bronze" %>
               </td>
               <td class="px-5 py-3 text-muted"><%= product.category&.name || "—" %></td>
               <td class="num px-5 py-3 text-right font-medium"><%= money(product.price) %></td>

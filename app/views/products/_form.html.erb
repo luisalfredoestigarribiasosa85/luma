@@ -14,6 +14,17 @@
         </div>
       </div>
 
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <%= form.label :size, "Talla", class: label_classes %>
+          <%= form.text_field :size, class: field_classes, placeholder: "Ej: M, L, 38, 42" %>
+        </div>
+        <div>
+          <%= form.label :color, "Color", class: label_classes %>
+          <%= form.text_field :color, class: field_classes, placeholder: "Ej: negro, crudo" %>
+        </div>
+      </div>
+
       <div>
         <%= form.label :category_id, "Categoría", class: label_classes %>
         <%= form.collection_select :category_id, current_account.categories.order(:name), :id, :name, { include_blank: "Sin categoría" }, class: field_classes %>

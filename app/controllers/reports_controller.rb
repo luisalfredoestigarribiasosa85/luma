@@ -21,7 +21,18 @@ class ReportsController < ApplicationController
     @day_expenses = current_account.expenses.where(spent_on: @date).includes(:user).order(created_at: :desc)
     @cash_expenses = @day_expenses.where(payment_method: Expense.payment_methods[:cash]).sum(:amount).to_d
     @cash_income = @by_payment["cash"].to_d
-    @cash_expected = @cash_income - @cash_expenses
+
+    @day_returns = current_account.returns.where(created_at: day_start..day_end).includes(:items, :sale, :user)
+    @cash_refunds = @day_returns.where(refund_method: "cash").sum(:amount).to_d
+
+    @day_cash_purchases = current_account.purchases.where(created_at: day_start..day_end)
+      .where(payment_method: Purchase.payment_methods[:cash]).sum(:total).to_d
+    @day_supplier_payments_cash = current_account.supplier_payments.where(paid_on: @date)
+      .where(payment_method: SupplierPayment.payment_methods[:cash]).sum(:amount).to_d
+
+    @cash_expected = expected_cash_for(@date)
+
+    @cash_count = current_account.cash_counts.find_by(counted_on: @date)
   end
 
   def profit
@@ -32,9 +43,14 @@ class ReportsController < ApplicationController
     completed = current_account.sales.completed.where(created_at: range)
     @sale_count = completed.count
     @revenue = completed.sum(:total).to_d
-    @cogs = completed.joins(:items).sum("sale_items.quantity * sale_items.unit_cost").to_d
-    @gross = @revenue - @cogs
-    @gross_margin = @revenue.positive? ? (@gross / @revenue * 100) : 0
+    @refunds_total = current_account.returns.where(created_at: range).sum(:amount).to_d
+    @returned_cogs = current_account.returns.joins(:items).where(created_at: range)
+      .sum("return_items.quantity * return_items.unit_cost").to_d
+    @net_revenue = @revenue - @refunds_total
+    sold_cogs = completed.joins(:items).sum("sale_items.quantity * sale_items.unit_cost").to_d
+    @cogs = sold_cogs - @returned_cogs
+    @gross = @net_revenue - @cogs
+    @gross_margin = @net_revenue.positive? ? (@gross / @net_revenue * 100) : 0
 
     @expenses = current_account.expenses.where(spent_on: @from..@to)
     @expenses_total = @expenses.sum(:amount).to_d
@@ -45,7 +61,29 @@ class ReportsController < ApplicationController
     @purchases_total = current_account.purchases.where(created_at: range).sum(:total).to_d
 
     @net = @gross - @expenses_total
-    @net_margin = @revenue.positive? ? (@net / @revenue * 100) : 0
+    @net_margin = @net_revenue.positive? ? (@net / @net_revenue * 100) : 0
+  end
+
+  def stock
+    products = current_account.products.includes(:category).order(:name)
+
+    @products = products.to_a
+    @total_cost_value = @products.sum { |p| p.stock.to_d * p.cost_price.to_d }
+    @total_price_value = @products.sum { |p| p.stock.to_d * p.price.to_d }
+    @potential_profit = @total_price_value - @total_cost_value
+    @stock_units = @products.sum(&:stock)
+    @out_of_stock = @products.count { |p| p.stock.zero? }
+
+    range = 90.days.ago..Time.current
+    sold_product_ids = current_account.sales.completed
+      .joins(:items)
+      .where(created_at: range)
+      .distinct
+      .pluck("sale_items.product_id")
+
+    @dead_stock = @products.select { |p| p.stock.positive? && !sold_product_ids.include?(p.id) }
+      .sort_by { |p| -(p.stock.to_d * p.cost_price.to_d) }
+      .first(20)
   end
 
   def sales_report

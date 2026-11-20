@@ -89,6 +89,6 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:sku, :name, :description, :category_id, :cost_price, :price,
-                                    :stock, :min_stock, :unit, :active)
+                                    :stock, :min_stock, :unit, :active, :size, :color)
   end
 end

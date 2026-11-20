@@ -21,8 +21,15 @@
 
 <div class="row"><span class="muted">Fecha</span><span><%= @sale.created_at.strftime("%d/%m/%Y %H:%M") %></span></div>
 <div class="row"><span class="muted">Cliente</span><span><%= @sale.customer&.name.presence || "Consumidor final" %></span></div>
+<% if @sale.customer&.document_number.present? %>
+  <div class="row"><span class="muted">CI / RUC</span><span><%= @sale.customer.document_number %></span></div>
+<% end %>
 <div class="row"><span class="muted">Vendedor</span><span><%= @sale.user&.name || "—" %></span></div>
 <div class="row"><span class="muted">Pago</span><span><%= payment_method_label(@sale.payment_method) %></span></div>
+<% if @sale.payment_method == "cash" && @sale.cash_received.present? %>
+  <div class="row"><span class="muted">Recibido</span><span><%= money(@sale.cash_received) %></span></div>
+  <div class="row"><span class="muted">Vuelto</span><span><%= money(@sale.cash_received - @sale.total) %></span></div>
+<% end %>
 
 <div class="divider"></div>
 
@@ -37,7 +44,7 @@
     <% @sale.items.each do |item| %>
       <tr>
         <td>
-          <span><%= item.product.name %></span>
+          <span><%= item.product.variant_label %></span>
           <span class="muted">  <%= item.quantity %> × <%= money(item.unit_price) %></span>
         </td>
         <td class="right"><%= money(item.line_subtotal) %></td>

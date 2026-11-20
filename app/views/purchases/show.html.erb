@@ -8,10 +8,48 @@
   <div class="border-b border-line px-5 py-4">
     <dl class="flex flex-wrap gap-x-8 gap-y-2 text-sm">
       <div class="flex gap-2"><dt class="text-muted">Proveedor</dt><dd class="font-semibold text-ink"><%= @purchase.supplier&.name || "—" %></dd></div>
+      <div class="flex gap-2"><dt class="text-muted">Forma de pago</dt><dd class="font-medium text-ink"><%= payment_method_label(@purchase.payment_method) %></dd></div>
       <div class="flex gap-2"><dt class="text-muted">Registró</dt><dd class="font-medium text-ink"><%= @purchase.user&.name || "—" %></dd></div>
       <div class="flex gap-2"><dt class="text-muted">Nota</dt><dd class="font-medium text-ink"><%= @purchase.note.presence || "—" %></dd></div>
+      <% if @purchase.due_date.present? %>
+        <div class="flex gap-2"><dt class="text-muted">Vencimiento</dt><dd class="font-medium <%= @purchase.balance.positive? && @purchase.due_date < Date.current ? "text-alert font-semibold" : "text-ink" %>"><%= simple_date(@purchase.due_date) %></dd></div>
+      <% end %>
     </dl>
   </div>
+
+  <% if @purchase.payment_method == "credit" %>
+    <div class="border-b border-line px-5 py-4">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h3 class="font-display text-xs font-bold uppercase tracking-wider text-muted">Cuenta por pagar</h3>
+          <% if @purchase.balance.positive? %>
+            <p class="num mt-1 text-xl font-bold text-alert"><%= money(@purchase.balance) %> <span class="text-xs font-normal text-muted">pendientes de <%= money(@purchase.total) %></span></p>
+          <% else %>
+            <p class="num mt-1 text-xl font-bold text-ok">Pagada</p>
+          <% end %>
+        </div>
+        <% if @purchase.balance.positive? %>
+          <%= link_to "Registrar pago", new_payable_path(purchase_id: @purchase.id), class: button_classes %>
+        <% end %>
+      </div>
+      <% if @purchase.supplier_payments.any? %>
+        <ul class="mt-4 divide-y divide-line">
+          <% @purchase.supplier_payments.order(created_at: :desc).each do |payment| %>
+            <li class="flex items-center justify-between gap-4 py-2 text-sm">
+              <div>
+                <span class="font-medium text-ink"><%= payment_method_label(payment.payment_method) %></span>
+                <span class="text-muted"> · <%= simple_date(payment.paid_on) %> · <%= payment.user&.name || "—" %></span>
+                <% if payment.note.present? %>
+                  <p class="mt-0.5 text-xs text-faint"><%= payment.note %></p>
+                <% end %>
+              </div>
+              <span class="num font-semibold text-ok"><%= money(payment.amount) %></span>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  <% end %>
 
   <div class="overflow-x-auto">
   <table class="w-full text-sm">
@@ -26,7 +64,7 @@
     <tbody class="divide-y divide-line">
       <% @purchase.items.each do |item| %>
         <tr class="transition hover:bg-raise/50">
-          <td class="px-5 py-3"><%= link_to item.product.name, item.product, class: "font-medium text-ink hover:text-bronze" %></td>
+          <td class="px-5 py-3"><%= link_to item.product.variant_label, item.product, class: "font-medium text-ink hover:text-bronze" %></td>
           <td class="num px-5 py-3 text-right text-ink-soft"><%= item.quantity %> <%= item.product.unit %></td>
           <td class="num px-5 py-3 text-right text-ink-soft"><%= money(item.unit_cost) %></td>
           <td class="num px-5 py-3 text-right font-semibold"><%= money(item.line_subtotal) %></td>

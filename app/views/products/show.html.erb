@@ -1,6 +1,6 @@
-<% content_for(:page_title) { @product.name } %>
+<% content_for(:page_title) { @product.variant_label } %>
 
-<%= render "shared/page_header", title: @product.name,
+<%= render "shared/page_header", title: @product.variant_label,
   subtitle: "#{@product.sku.presence || "Sin código"} · #{@product.category&.name || "Sin categoría"}",
   action: link_to("Editar", edit_product_path(@product), class: button_classes(:secondary)) %>
 
@@ -120,6 +120,6 @@
 
 <div class="mt-4 text-right">
   <%= button_to "Eliminar producto", @product, method: :delete,
-      data: { turbo_confirm: "¿Eliminar #{@product.name}? Esta acción no se puede deshacer." },
+      data: { turbo_confirm: "¿Eliminar #{@product.variant_label}? Esta acción no se puede deshacer." },
       class: button_classes(:danger) %>
 </div>

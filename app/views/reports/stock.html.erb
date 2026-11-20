@@ -1,0 +1,61 @@
+<% content_for(:page_title) { "Reporte de stock" } %>
+
+<%= render "shared/page_header", title: "Reporte de stock",
+  subtitle: "Valor del inventario y mercadería sin rotación",
+  action: link_to("Productos", products_path, class: button_classes(:secondary)) %>
+
+<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+  <div class="<%= card_classes %> p-5">
+    <p class="eyebrow">Valor del stock (costo)</p>
+    <p class="num font-display mt-2 text-2xl font-bold text-bronze"><%= money(@total_cost_value) %></p>
+  </div>
+  <div class="<%= card_classes %> p-5">
+    <p class="eyebrow">Valor del stock (venta)</p>
+    <p class="num font-display mt-2 text-2xl font-bold text-ink"><%= money(@total_price_value) %></p>
+  </div>
+  <div class="<%= card_classes %> p-5">
+    <p class="eyebrow">Ganancia potencial</p>
+    <p class="num font-display mt-2 text-2xl font-bold text-ok"><%= money(@potential_profit) %></p>
+  </div>
+  <div class="<%= card_classes %> p-5">
+    <p class="eyebrow">Unidades / sin stock</p>
+    <p class="num font-display mt-2 text-2xl font-bold text-ink"><%= @stock_units %> <span class="text-sm font-normal text-alert">/ <%= @out_of_stock %></span></p>
+  </div>
+</div>
+
+<div class="mt-6 <%= card_classes %> overflow-hidden">
+  <div class="border-b border-line px-5 py-4">
+    <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Mercadería sin rotación — sin ventas en 90 días</h3>
+    <p class="mt-1 text-xs text-muted">Los que más capital tienen parado, ordenados por valor al costo. Sugerido para liquidación.</p>
+  </div>
+  <% if @dead_stock.any? %>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+          <tr>
+            <th class="px-5 py-3">Producto</th>
+            <th class="px-5 py-3">Categoría</th>
+            <th class="px-5 py-3 text-right">Stock</th>
+            <th class="px-5 py-3 text-right">Costo unit.</th>
+            <th class="px-5 py-3 text-right">Valor</th>
+            <th class="px-5 py-3 text-right"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          <% @dead_stock.each do |product| %>
+            <tr class="transition hover:bg-raise/50">
+              <td class="px-5 py-3"><%= link_to product.variant_label, product, class: "font-medium text-ink hover:text-bronze" %></td>
+              <td class="px-5 py-3 text-muted"><%= product.category&.name || "—" %></td>
+              <td class="num px-5 py-3 text-right text-ink-soft"><%= product.stock %> <%= product.unit %></td>
+              <td class="num px-5 py-3 text-right text-ink-soft"><%= money(product.cost_price) %></td>
+              <td class="num px-5 py-3 text-right font-semibold text-alert"><%= money(product.stock.to_d * product.cost_price.to_d) %></td>
+              <td class="px-5 py-3 text-right"><%= link_to "Vender", new_sale_path(product: product.id), class: "btn btn-primary !px-3.5 !py-1.5" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <%= render "shared/empty_state", message: "Todo el stock se mueve bien — ninguna mercadería lleva 90 días sin ventas" %>
+  <% end %>
+</div>

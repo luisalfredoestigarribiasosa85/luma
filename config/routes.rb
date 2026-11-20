@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :suppliers
   resources :purchases
   resources :expenses, except: %i[ show ]
+  resources :payables, only: %i[ index new create ], controller: "supplier_payments"
   resources :imports, only: %i[new create] do
     collection do
       get :template
@@ -26,13 +27,16 @@ Rails.application.routes.draw do
   resources :sales do
     patch :cancel, on: :member
     get :ticket, on: :member
+    resources :returns, only: %i[new create]
   end
   resources :stock_movements, only: %i[index new create]
+  resources :cash_counts, only: %i[ index create ]
   resources :reports, only: [] do
     collection do
       get :daily_cash
       get :sales_report
       get :profit
+      get :stock
     end
   end
   resources :dashboard, only: :index

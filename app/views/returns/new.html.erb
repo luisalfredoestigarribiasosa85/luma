@@ -1,0 +1,79 @@
+<% content_for(:page_title) { "Devolución · Venta ##{@sale.number}" } %>
+
+<%= render "shared/page_header", title: "Devolución",
+  subtitle: "Venta ##{@sale.number} — del #{simple_date(@sale.created_at)}",
+  action: link_to("Volver", sale_path(@sale), class: button_classes(:secondary)) %>
+
+<%= render "shared/form_errors", object: @return %>
+
+<%= form_with model: @return, url: sale_returns_path(@sale),
+  data: { controller: "returns" }, class: "" do |form| %>
+
+  <div class="card overflow-hidden">
+    <div class="border-b border-line px-5 py-4">
+      <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Productos a devolver</h3>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+          <tr>
+            <th class="px-5 py-3">Producto</th>
+            <th class="px-5 py-3 text-right">Vendido</th>
+            <th class="px-5 py-3 text-right">Ya devuelto</th>
+            <th class="px-5 py-3 text-right">Devolver</th>
+            <th class="px-5 py-3 text-right">Importe</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          <% sold_index = 0 %>
+          <% sale_items_by_product = @sale.items.group_by(&:product_id) %>
+          <% @return.items.each do |item| %>
+            <% sold = sale_items_by_product[item.product_id].sum(&:quantity) %>
+            <% already = ReturnItem.joins(:return).where("returns.sale_id = ?", @sale.id).where(product_id: item.product_id).sum(:quantity) %>
+            <tr>
+              <td class="px-5 py-3">
+                <%= hidden_field_tag "return[items_attributes][#{sold_index}][product_id]", item.product_id %>
+                <%= hidden_field_tag "return[items_attributes][#{sold_index}][unit_price]", item.unit_price, data: { returns_target: "unitPrice" } %>
+                <p class="font-medium text-ink"><%= item.product.variant_label %></p>
+              </td>
+              <td class="num px-5 py-3 text-right text-ink-soft"><%= sold %></td>
+              <td class="num px-5 py-3 text-right text-ink-soft"><%= already %></td>
+              <td class="px-5 py-3 text-right">
+                <input type="number" name="return[items_attributes][<%= sold_index %>][quantity]"
+                       value="<%= item.quantity %>" min="0" max="<%= sold - already %>" step="1"
+                       inputmode="numeric"
+                       class="num w-20 rounded-md border border-line-dark bg-surface px-2 py-1.5 text-right text-sm"
+                       data-returns-target="qty" data-action="input->returns#recalculate">
+              </td>
+              <td class="num px-5 py-3 text-right font-semibold text-ink" data-returns-target="lineTotal"><%= money(item.line_subtotal) %></td>
+            </tr>
+            <% sold_index += 1 %>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr class="border-t-2 border-line bg-raise/50">
+            <td colspan="4" class="px-5 py-3 font-display text-sm font-bold uppercase tracking-wide text-ink">Total a devolver</td>
+            <td class="num px-5 py-3 text-right font-display text-base font-bold text-gold" data-returns-target="total"><%= money(@return.items.sum(&:line_subtotal)) %></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="mt-6 grid gap-6 xl:grid-cols-3">
+    <div class="space-y-4 xl:col-span-2">
+      <div>
+        <%= form.label :refund_method, "Cómo se devuelve", class: label_classes %>
+        <%= form.select :refund_method, Return::REFUND_METHODS.map { |m| [ { "cash" => "Reembolso en efectivo", "card" => "Reembolso (tarjeta)", "transfer" => "Reembolso (transferencia)", "credit_note" => "A cuenta del cliente (crédito)" }[m.to_s], m ] }, {}, class: field_classes %>
+        <p class="mt-1 text-xs text-muted">El reembolso respeta el descuento proporcional de la venta. En ventas a crédito, «A cuenta» descuenta lo que el cliente aún debe.</p>
+      </div>
+      <div>
+        <%= form.label :note, "Motivo (opcional)", class: label_classes %>
+        <%= form.text_area :note, rows: 2, placeholder: "Talla equivocada, producto dañado, etc.", class: field_classes %>
+      </div>
+    </div>
+    <div class="flex items-end gap-3 self-end">
+      <%= form.submit "Registrar devolución", class: "#{button_classes} w-full" %>
+    </div>
+  </div>
+<% end %>

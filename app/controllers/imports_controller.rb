@@ -60,8 +60,8 @@ class ImportsController < ApplicationController
     headers = ProductImporter::EXPECTED_HEADERS
     csv = CSV.generate do |row|
       row << headers
-      row << [ "Clavo 2 pulgadas", "CLA-2", "Fijaciones", "15000", "25000", "100", "20", "caja" ]
-      row << [ "Cemento 50kg", "CEM-50", "Construcción", "60000", "85000", "50", "10", "bolsa" ]
+      row << [ "Remera oversize", "REM-13", "Ropa", "45000", "89000", "20", "5", "unidad", "M", "negro" ]
+      row << [ "Remera oversize", "REM-14", "Ropa", "45000", "89000", "18", "5", "unidad", "L", "negro" ]
     end
 
     send_data "\xEF\xBB\xBF#{csv}".force_encoding("UTF-8"),

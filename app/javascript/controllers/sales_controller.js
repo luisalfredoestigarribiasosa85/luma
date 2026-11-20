@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["lines", "template", "line", "product", "quantity", "unitPrice", "subtotal", "discount", "summaryCount", "summarySubtotal", "summaryTotal", "paymentMethod", "cashBlock", "cashReceived", "changeLabel", "change"]
+  static targets = ["lines", "template", "line", "product", "quantity", "unitPrice", "subtotal", "discount", "discountPercent", "summaryCount", "summarySubtotal", "summaryTotal", "paymentMethod", "cashBlock", "cashReceived", "changeLabel", "change"]
   static values = { stockLimit: Boolean }
 
   connect() {
@@ -81,6 +81,22 @@ export default class extends Controller {
     this.recalculate()
   }
 
+  applyPercentDiscount() {
+    const pct = parseFloat(this.discountPercentTarget.value) || 0
+    this.discountTarget.value = Math.round(this.currentSubtotal() * pct) / 100
+    this.recalculate()
+  }
+
+  currentSubtotal() {
+    let subtotal = 0
+    this.lineTargets.forEach((line) => {
+      const quantity = parseFloat(line.querySelector("[data-sales-target='quantity']").value) || 0
+      const price = parseFloat(line.querySelector("[data-sales-target='unitPrice']").value) || 0
+      subtotal += quantity * price
+    })
+    return subtotal
+  }
+
   recalculate() {
     let subtotal = 0
     let count = 0
@@ -98,6 +114,10 @@ export default class extends Controller {
 
     const discount = this.hasDiscountTarget ? (parseFloat(this.discountTarget.value) || 0) : 0
     const total = Math.max(subtotal - discount, 0)
+
+    if (this.hasDiscountPercentTarget && document.activeElement !== this.discountPercentTarget) {
+      this.discountPercentTarget.value = subtotal > 0 ? String(Math.round(discount / subtotal * 10000) / 100) : ""
+    }
 
     this.summaryCountTarget.textContent = count
     this.summarySubtotalTarget.textContent = this.format(subtotal)

@@ -14,6 +14,8 @@ class PurchaseItem < ApplicationRecord
   private
 
   def defaults_from_product
+    return if product.nil?
+
     self.unit_cost ||= product.cost_price
   end
 end

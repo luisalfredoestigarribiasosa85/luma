@@ -1,9 +1,10 @@
 class Product < ApplicationRecord
   include AccountScoped
 
-  belongs_to :category, optional: true
   has_many :sale_items, dependent: :restrict_with_error
+  has_many :purchase_items, dependent: :restrict_with_error
   has_many :stock_movements, dependent: :restrict_with_error
+  belongs_to :category, optional: true
 
   validates :name, presence: true
   validates :sku, uniqueness: { scope: :account_id }, allow_blank: true
@@ -17,6 +18,14 @@ class Product < ApplicationRecord
 
   def low_stock?
     active? && stock <= min_stock
+  end
+
+  # Identificador legible de la variante: "Remera oversize · M negro".
+  def variant_label
+    parts = [ name ]
+    parts << size if size.present?
+    parts << color if color.present?
+    parts.join(" · ")
   end
 
   private

@@ -15,11 +15,6 @@ module ApplicationHelper
     enum_map.keys.map { |key| [ PAYMENT_METHOD_LABELS[key] || key.titleize, key ] }
   end
 
-  def product_select_label(product, price)
-    base = "#{product.name} — #{money(price)}"
-    product.low_stock? ? "#{base} (stock bajo, #{product.stock} #{product.unit})" : base
-  end
-
   def money(amount)
     number_to_currency(amount || 0,
       unit: "Gs. ",

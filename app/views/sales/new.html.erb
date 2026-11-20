@@ -1,5 +1,5 @@
 <% content_for(:page_title) { "Nueva venta" } %>
-<% catalog = @products.map { |p| { id: p.id, name: p.name, price: p.price, unit: p.unit, stock: p.stock } }.to_json %>
+<% catalog = @products.map { |p| { id: p.id, name: p.variant_label, sku: p.sku, price: p.price, unit: p.unit, stock: p.stock, low: p.low_stock? } }.to_json %>
 
 <script type="application/json" id="sale-catalog" data-turbo-cache="false"><%= raw json_escape catalog %></script>
 
@@ -66,9 +66,18 @@
         </div>
         <div class="flex items-center justify-between gap-4">
           <span class="text-muted">Descuento</span>
-          <%= form.number_field :discount, step: "0.01", min: 0, value: @sale.discount || 0,
-              class: "num w-24 rounded-md border border-line-dark bg-surface px-2 py-1.5 text-right text-sm",
-              data: { sales_target: "discount", action: "input->sales#recalculate" } %>
+          <div class="flex items-center gap-2">
+            <div class="relative">
+              <input type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="0"
+                     aria-label="Descuento porcentual"
+                     class="num w-20 rounded-md border border-line-dark bg-surface px-2 py-1.5 pr-7 text-right text-sm"
+                     data-sales-target="discountPercent" data-action="input->sales#applyPercentDiscount">
+              <span class="pointer-events-none absolute inset-y-0 right-2 flex items-center text-xs text-faint">%</span>
+            </div>
+            <%= form.number_field :discount, step: "0.01", min: 0, value: @sale.discount || 0, placeholder: "Gs.",
+                class: "num w-28 rounded-md border border-line-dark bg-surface px-2 py-1.5 text-right text-sm",
+                data: { sales_target: "discount", action: "input->sales#recalculate" } %>
+          </div>
         </div>
         <div class="mt-4 flex items-end justify-between border-t border-dashed border-line-dark pt-4">
           <span class="font-display text-sm font-bold uppercase tracking-wider">Total</span>
@@ -78,7 +87,8 @@
         <div data-sales-target="cashBlock" class="hidden space-y-3 border-t border-dashed border-line-dark pt-4">
           <div class="flex items-center justify-between gap-4">
             <label for="cash-received" class="text-muted">Paga con</label>
-            <input type="number" id="cash-received" min="0" step="1" inputmode="numeric" placeholder="0"
+            <input type="number" id="cash-received" name="sale[cash_received]" min="0" step="1" inputmode="numeric" placeholder="0"
+                   value="<%= @sale.cash_received %>"
                    class="num w-32 rounded-md border border-line-dark bg-surface px-2 py-1.5 text-right text-sm"
                    data-sales-target="cashReceived" data-action="input->sales#recalculate">
           </div>

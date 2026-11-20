@@ -1,0 +1,43 @@
+<% content_for(:page_title) { "Pagar compra ##{@payable.number}" } %>
+
+<%= render "shared/page_header", title: "Pagar compra a crédito",
+  subtitle: "Compra ##{@payable.number} · #{@payable.supplier&.name} · saldo #{money(@payable.balance)}",
+  action: link_to("Volver", payables_path, class: button_classes(:secondary)) %>
+
+<%= render "shared/form_errors", object: @supplier_payment %>
+
+<div class="max-w-xl">
+  <div class="<%= card_classes %> p-6">
+    <dl class="space-y-2 text-sm font-mono">
+      <div class="flex justify-between"><dt class="text-muted">Total de la compra</dt><dd><%= money(@payable.total) %></dd></div>
+      <div class="flex justify-between"><dt class="text-muted">Ya pagado</dt><dd><%= money(@payable.total - @payable.balance) %></dd></div>
+      <div class="flex justify-between border-t border-dashed border-line-dark pt-2 font-semibold text-alert"><dt>Saldo pendiente</dt><dd><%= money(@payable.balance) %></dd></div>
+    </dl>
+
+    <%= form_with model: @supplier_payment, url: payables_path(purchase_id: @payable.id), class: "mt-6 space-y-5" do |form| %>
+      <div>
+        <%= form.label :payment_method, "Forma de pago", class: label_classes %>
+        <%= form.select :payment_method, payment_method_options(SupplierPayment.payment_methods), {}, class: field_classes %>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <%= form.label :amount, "Monto (Gs.)", class: label_classes %>
+          <%= form.number_field :amount, step: "0.01", min: 0, max: @payable.balance, required: true,
+              value: @payable.balance, class: "#{field_classes} num" %>
+        </div>
+        <div>
+          <%= form.label :paid_on, "Fecha", class: label_classes %>
+          <%= form.date_field :paid_on, required: true, value: Date.current, class: field_classes %>
+        </div>
+      </div>
+
+      <div>
+        <%= form.label :note, "Nota (opcional)", class: label_classes %>
+        <%= form.text_area :note, rows: 2, placeholder: "N° de comprobante, referencia…", class: field_classes %>
+      </div>
+
+      <%= form.submit "Registrar pago", class: button_classes %>
+    <% end %>
+  </div>
+</div>

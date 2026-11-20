@@ -1,0 +1,123 @@
+<% content_for(:page_title) { "Cuentas por pagar" } %>
+
+<%= render "shared/page_header", title: "Cuentas por pagar",
+  subtitle: "Compras a crédito pendientes con tus proveedores" %>
+
+<div class="grid gap-4 sm:grid-cols-2 mb-4">
+  <div class="<%= card_classes %> p-5">
+    <p class="eyebrow">Compras a crédito abiertas</p>
+    <p class="num font-display mt-2 text-2xl font-bold text-ink"><%= @payables.count %></p>
+  </div>
+  <div class="<%= card_classes %> p-5">
+    <p class="eyebrow">Total adeudado</p>
+    <p class="num font-display mt-2 text-2xl font-bold text-alert"><%= money(@total_owed) %></p>
+  </div>
+</div>
+
+<div class="<%= card_classes %> overflow-hidden">
+  <% if @payables.any? %>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+          <tr>
+            <th class="px-5 py-3">Compra</th>
+            <th class="px-5 py-3">Fecha</th>
+            <th class="px-5 py-3">Vencimiento</th>
+            <th class="px-5 py-3">Proveedor</th>
+            <th class="px-5 py-3 text-right">Total</th>
+            <th class="px-5 py-3 text-right">Saldo</th>
+            <th class="px-5 py-3 text-right">Acción</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          <% @payables.each do |purchase| %>
+            <tr class="transition hover:bg-raise/50">
+              <td class="num px-5 py-3 text-faint"><%= link_to "##{purchase.number}", purchase_path(purchase), class: "hover:text-bronze" %></td>
+              <td class="num px-5 py-3 text-muted"><%= simple_date(purchase.created_at) %></td>
+              <td class="num px-5 py-3 <%= purchase.due_date && purchase.due_date < Date.current ? "font-bold text-alert" : "text-ink-soft" %>">
+                <%= purchase.due_date ? simple_date(purchase.due_date) : "sin vencimiento" %>
+              </td>
+              <td class="px-5 py-3 font-medium text-ink"><%= purchase.supplier&.name || "—" %></td>
+              <td class="num px-5 py-3 text-right text-ink-soft"><%= money(purchase.total) %></td>
+              <td class="num px-5 py-3 text-right font-semibold text-alert"><%= money(purchase.balance) %></td>
+              <td class="px-5 py-3 text-right">
+                <%= link_to "Registrar pago", new_payable_path(purchase_id: purchase.id), class: "btn btn-primary !px-3 !py-1.5" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <%= render "shared/empty_state", message: "No hay cuentas por pagar pendientes" %>
+  <% end %>
+</div>
+
+
+<div class="<%= card_classes %> overflow-hidden">
+  <div class="border-b border-line px-5 py-4">
+    <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink">Historial de pagos a proveedores</h3>
+    <p class="mt-1 text-xs text-muted">Todos los pagos registrados, estén o no vinculados a una compra a crédito abierta.</p>
+  </div>
+
+  <div class="border-b border-line px-5 py-4">
+    <%= form_with url: payables_path, method: :get, class: "flex flex-wrap items-end gap-3" do |form| %>
+      <div class="min-w-48 flex-1">
+        <%= form.label :q, "Buscar", class: label_classes %>
+        <%= form.text_field :q, value: @q, placeholder: "N° de comprobante, proveedor o N° de compra…", class: field_classes %>
+      </div>
+      <div>
+        <%= form.label :payment_method, "Método", class: label_classes %>
+        <%= form.select :payment_method, payment_method_options(SupplierPayment.payment_methods), { include_blank: "Todos", selected: @payment_method }, class: field_classes %>
+      </div>
+      <div>
+        <%= form.label :from, "Desde", class: label_classes %>
+        <%= form.date_field :from, value: @from, class: field_classes %>
+      </div>
+      <div>
+        <%= form.label :to, "Hasta", class: label_classes %>
+        <%= form.date_field :to, value: @to, class: field_classes %>
+      </div>
+      <%= form.submit "Filtrar", class: "#{button_classes(:secondary)} cursor-pointer" %>
+      <%= link_to "Limpiar", payables_path, class: "text-xs font-semibold uppercase tracking-wider text-bronze hover:text-bronze-deep" %>
+    <% end %>
+  </div>
+
+  <% if @filtered_payments.any? %>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-raise/50 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+          <tr>
+            <th class="px-5 py-3">Fecha</th>
+            <th class="px-5 py-3">Compra</th>
+            <th class="px-5 py-3">Proveedor</th>
+            <th class="px-5 py-3">Método</th>
+            <th class="px-5 py-3">Nota</th>
+            <th class="px-5 py-3 text-right">Monto</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          <% @filtered_payments.each do |payment| %>
+            <tr class="transition hover:bg-raise/50">
+              <td class="num px-5 py-3 text-muted"><%= simple_date(payment.paid_on) %></td>
+              <td class="num px-5 py-3 text-faint"><%= link_to "##{payment.purchase.number}", purchase_path(payment.purchase), class: "hover:text-bronze" %></td>
+              <td class="px-5 py-3 font-medium text-ink"><%= payment.purchase.supplier&.name || "—" %></td>
+              <td class="px-5 py-3 text-ink-soft"><%= payment_method_label(payment.payment_method) %></td>
+              <td class="px-5 py-3 max-w-64 truncate text-xs text-faint" title="<%= payment.note %>"><%= payment.note.presence || "—" %></td>
+              <td class="num px-5 py-3 text-right font-semibold text-ink"><%= money(payment.amount) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr class="border-t-2 border-line bg-raise/50">
+            <td colspan="5" class="px-5 py-3 font-display text-sm font-bold uppercase tracking-wide text-ink">Total</td>
+            <td class="num px-5 py-3 text-right font-display text-base font-bold text-bronze"><%= money(@payments_total) %></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <p class="border-t border-line px-5 py-3 text-[11px] text-faint">Mostrando los últimos 200 pagos que coinciden con el filtro.</p>
+  <% else %>
+    <%= render "shared/empty_state", message: @q || @payment_method || (@from && @to) ? "Ningún pago coincide con el filtro" : "Todavía no hay pagos registrados" %>
+  <% end %>
+</div>

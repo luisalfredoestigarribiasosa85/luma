@@ -8,6 +8,7 @@ class Sale < ApplicationRecord
   belongs_to :user, optional: true
   has_many :items, class_name: "SaleItem", foreign_key: :sale_id, dependent: :destroy, inverse_of: :sale
   has_many :payments, dependent: :restrict_with_error
+  has_many :returns, class_name: "Return", foreign_key: :sale_id, dependent: :destroy
   has_many :stock_movements, dependent: :nullify
 
   enum :status, STATUSES.each_with_index.to_h
@@ -21,6 +22,7 @@ class Sale < ApplicationRecord
 
   validates :payment_method, inclusion: { in: PAYMENT_METHODS }
   validates :discount, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :cash_received, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validate :at_least_one_item
   validate :sufficient_stock, on: :create
   validate :products_belong_to_account
@@ -50,8 +52,9 @@ class Sale < ApplicationRecord
   end
 
   # The amount still owed by the customer for this sale.
+  # Credit notes from returns reduce what the customer owes.
   def balance
-    total.to_d - payments.sum(:amount).to_d
+    total.to_d - payments.sum(:amount).to_d - returns.where(refund_method: "credit_note").sum(:amount).to_d
   end
 
   def paid_in_full?
@@ -115,17 +118,24 @@ class Sale < ApplicationRecord
   def restore_stock!
     items.each do |item|
       product = account.products.find(item.product_id)
+      # Las unidades ya devueltas vuelven se suman aparte; no restaurar dos veces.
+      already_returned = returns.joins(:items)
+        .where(return_items: { product_id: product.id })
+        .sum("return_items.quantity")
+      remaining = item.quantity - already_returned
+      next if remaining <= 0
+
       previous = product.stock
-      new_stock = previous + item.quantity
+      new_stock = previous + remaining
       product.update!(stock: new_stock)
 
       StockMovement.create!(
         account: account,
         product: product,
         sale: self,
-        user: Current.user,
+        user: user,
         movement_type: :return,
-        quantity: item.quantity,
+        quantity: remaining,
         previous_quantity: previous,
         new_quantity: new_stock,
         note: "Anulación de venta #{number}"

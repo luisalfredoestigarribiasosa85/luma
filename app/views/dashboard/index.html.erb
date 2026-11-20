@@ -94,7 +94,7 @@
           <% @low_stock_products.each do |product| %>
             <li class="flex items-center justify-between py-3">
               <div>
-                <p class="text-sm font-medium"><%= product.name %></p>
+                <p class="text-sm font-medium"><%= product.variant_label %></p>
                 <p class="num text-xs text-faint"><%= product.sku.presence || "sin código" %></p>
               </div>
               <span class="<%= product.stock.zero? ? "badge badge-alert" : "badge badge-warn" %>">

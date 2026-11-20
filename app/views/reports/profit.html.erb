@@ -28,6 +28,10 @@
     <p class="num font-display mt-2 text-2xl font-bold text-ink"><%= money(@revenue) %></p>
   </div>
   <div class="<%= card_classes %> p-5">
+    <p class="eyebrow">Reembolsos / devoluciones</p>
+    <p class="num font-display mt-2 text-2xl font-bold text-alert">− <%= money(@refunds_total) %></p>
+  </div>
+  <div class="<%= card_classes %> p-5">
     <p class="eyebrow">Costo de lo vendido</p>
     <p class="num font-display mt-2 text-2xl font-bold text-muted">− <%= money(@cogs) %></p>
   </div>
@@ -40,7 +44,7 @@
     <p class="eyebrow">Gastos del período</p>
     <p class="num font-display mt-2 text-2xl font-bold text-alert">− <%= money(@expenses_total) %></p>
   </div>
-  <div class="<%= card_classes %> p-5 border border-bronze-deep/40">
+  <div class="<%= card_classes %> p-5 border border-bronze-deep/40 sm:col-span-2 xl:col-span-3">
     <p class="eyebrow">Ganancia neta</p>
     <p class="num font-display mt-2 text-2xl font-bold <%= @net.negative? ? "text-alert" : "text-bronze" %>"><%= money(@net) %></p>
     <p class="num mt-1 text-xs text-faint">Margen <%= number_to_percentage(@net_margin, precision: 1) %></p>
@@ -82,7 +86,10 @@
     <div class="mt-4 space-y-3 text-sm leading-relaxed text-ink-soft">
       <dl class="space-y-2 font-mono text-[13px]">
         <div class="flex justify-between"><dt class="text-muted">Ingresos por ventas</dt><dd><%= money(@revenue) %></dd></div>
+        <div class="flex justify-between"><dt class="text-muted">− Reembolsos / devoluciones</dt><dd><%= money(@refunds_total) %></dd></div>
+        <div class="flex justify-between border-t border-dashed border-line-dark pt-2"><dt class="text-muted">= Ingresos netos</dt><dd><%= money(@net_revenue) %></dd></div>
         <div class="flex justify-between"><dt class="text-muted">− Costo de lo vendido</dt><dd><%= money(@cogs) %></dd></div>
+        <p class="text-[11px] text-faint">El costo ya descuenta las unidades devueltas (vuelven al stock).</p>
         <div class="flex justify-between border-t border-dashed border-line-dark pt-2"><dt class="text-muted">= Ganancia bruta</dt><dd><%= money(@gross) %></dd></div>
         <div class="flex justify-between"><dt class="text-muted">− Gastos operativos</dt><dd><%= money(@expenses_total) %></dd></div>
         <div class="flex justify-between border-t border-dashed border-line-dark pt-2 font-semibold text-bronze"><dt>Ganancia neta</dt><dd><%= money(@net) %></dd></div>

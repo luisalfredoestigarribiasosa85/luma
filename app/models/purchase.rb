@@ -1,15 +1,22 @@
 class Purchase < ApplicationRecord
   include AccountScoped
 
+  PAYMENT_METHODS = %w[cash card transfer credit qr].freeze
+
   belongs_to :supplier, optional: true
   belongs_to :user, optional: true
   has_many :items, class_name: "PurchaseItem", foreign_key: :purchase_id, dependent: :destroy, inverse_of: :purchase
+  has_many :supplier_payments, dependent: :restrict_with_error
+
+  enum :payment_method, PAYMENT_METHODS.each_with_index.to_h
 
   accepts_nested_attributes_for :items, allow_destroy: true, reject_if: ->(attrs) {
     attrs[ "quantity" ].blank? || attrs[ "quantity" ].to_i.zero?
   }
 
   validates :supplier_id, presence: true
+  validates :payment_method, inclusion: { in: PAYMENT_METHODS }
+  validates :due_date, presence: true, if: :credit?
   validate :at_least_one_item
   validate :products_belong_to_account
 
@@ -20,6 +27,14 @@ class Purchase < ApplicationRecord
 
   def number
     super || ( format("%06d", id) if persisted? )
+  end
+
+  def paid_in_full?
+    balance <= 0
+  end
+
+  def balance
+    total.to_d - supplier_payments.sum(:amount).to_d
   end
 
   private
@@ -37,7 +52,7 @@ class Purchase < ApplicationRecord
   end
 
   def assign_number
-    self.number ||= format("%06d", account.next_sale_number!)
+    self.number ||= format("%06d", account.next_purchase_number!)
   end
 
   def at_least_one_item

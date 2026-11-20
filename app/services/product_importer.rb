@@ -4,7 +4,7 @@
 require "csv"
 
 class ProductImporter
-  EXPECTED_HEADERS = %w[nombre sku categoria costo precio stock minimo unidad].freeze
+  EXPECTED_HEADERS = %w[nombre sku categoria costo precio stock minimo unidad talle color].freeze
 
   attr_reader :rows, :imported_count, :errors
 
@@ -221,6 +221,8 @@ class ProductImporter
       stock: integer_or_zero(attrs[ "stock" ]),
       min_stock: integer_or_zero(attrs[ "minimo" ]),
       unit: attrs[ "unidad" ].presence || "unidad",
+      size: attrs[ "talle" ].presence,
+      color: attrs[ "color" ].presence,
       category: find_or_build_category(attrs[ "categoria" ])
     )
   end

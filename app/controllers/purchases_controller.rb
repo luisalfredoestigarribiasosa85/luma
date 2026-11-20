@@ -40,7 +40,7 @@ class PurchasesController < ApplicationController
   end
 
   def purchase_params
-    params.require(:purchase).permit(:supplier_id, :note,
+    params.require(:purchase).permit(:supplier_id, :note, :payment_method, :due_date,
                                      items_attributes: [ :product_id, :quantity, :unit_cost ])
   end
 
